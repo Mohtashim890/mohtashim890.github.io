@@ -1,31 +1,109 @@
+
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const projects = [
+  {
+    title: "IronForge",
+    category: "Flagship project",
+    description:
+      "An agentic SaaS engineering project spanning .NET, Blazor, APIs, MCP integration, MAUI Blazor Hybrid, and cloud deployment.",
+    technologies: [
+      ".NET",
+      "Blazor",
+      "ASP.NET Core",
+      "MCP",
+      "PostgreSQL",
+      "Docker",
+    ],
+    href: "/projects/ironforge/",
+    status: "Active engineering project",
+  },
+];
 ---
 
 <BaseLayout
-  title="Projects by Mohtashim Ul Haq | .NET, Agentic AI & SaaS Engineering"
-  description="Explore the projects developed by Mohtashim Ul Haq, a software engineer focused on .NET applications, agentic AI integrations, SaaS architecture, and cloud deployment."
+  title="Projects | Mohtashim Ul Haq"
+  description="Selected software engineering projects, with technical case studies and verifiable implementation evidence."
 >
-  <section class="section">
-    <div class="container">
-      <h1>Projects</h1>
-      <p>
-        Here are some of the projects I've worked on, showcasing my expertise in .NET application development, agentic AI integrations, SaaS architecture, and cloud deployment.
+  <section class="container section projects-page">
+    <header class="page-intro">
+      <p class="eyebrow">Selected work</p>
+      <h1>Projects built around practical engineering.</h1>
+      <p class="lead">
+        Each case study explains the problem, implementation,
+        architecture, and evidence behind the project.
       </p>
-    </div>
-  </section>
+    </header>
 
-  <section class="section">
-    <div class="container">
-      <ul class="project-list">
-        <li>
-          <a href="/projects/ironforge/">
-            <h2>IronForge</h2>
-            <p>An agentic SaaS platform integrating .NET web applications, APIs, and cross-platform development.</p>
-          </a>
-        </li>
-        <!-- Add more projects here -->
-      </ul>
+    <div class="project-list">
+      {projects.map((project) => (
+        <article class="card project-card">
+          <div class="project-meta">
+            <span>{project.category}</span>
+            <span>{project.status}</span>
+          </div>
+
+          <h2>{project.title}</h2>
+          <p>{project.description}</p>
+
+          <div class="technologies">
+            {project.technologies.map((technology) => (
+              <span>{technology}</span>
+            ))}
+          </div>
+
+          <a href={project.href}>Read case study →</a>
+        </article>
+      ))}
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .projects-page {
+    max-width: 900px;
+  }
+
+  .page-intro {
+    padding-block: 3rem;
+  }
+
+  .lead {
+    max-width: 720px;
+    font-size: 1.15rem;
+  }
+
+  .project-list {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .project-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.75rem;
+    color: var(--color-accent);
+    font-size: 0.8rem;
+  }
+
+  .project-card h2 {
+    margin-top: 1.25rem;
+  }
+
+  .technologies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-block: 1.5rem;
+  }
+
+  .technologies span {
+    padding: 0.3rem 0.65rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    color: var(--color-muted);
+    font-size: 0.8rem;
+  }
+</style>

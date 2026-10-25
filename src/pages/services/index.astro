@@ -1,40 +1,171 @@
+
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const services = [
+  {
+    number: "01",
+    title: "Custom .NET and SaaS development",
+    description:
+      "Develop business applications, web interfaces, APIs, and maintainable backend services using C#, ASP.NET Core, and Blazor.",
+    deliverables: [
+      "Application and API implementation",
+      "Database integration and migrations",
+      "Authentication and validation integration",
+      "Deployment and handover documentation",
+    ],
+  },
+  {
+    number: "02",
+    title: "AI and agent integration",
+    description:
+      "Integrate model-driven capabilities into existing applications where tool use and agent workflows solve a concrete business problem.",
+    deliverables: [
+      "Agent workflow and tool-boundary design",
+      "API and tool integration",
+      "Input validation and failure handling",
+      "Testing and evaluation plan",
+    ],
+  },
+  {
+    number: "03",
+    title: "MCP server and client integration",
+    description:
+      "Expose application capabilities through Model Context Protocol tools and connect compatible clients to authorized operations.",
+    deliverables: [
+      "MCP server and tool implementation",
+      "Client connectivity and configuration",
+      "Authentication and permission design",
+      "Integration documentation",
+    ],
+  },
+  {
+    number: "04",
+    title: "Cross-platform .NET applications",
+    description:
+      "Build or extend Android and Windows applications using .NET MAUI Blazor Hybrid and shared application services.",
+    deliverables: [
+      "Cross-platform UI implementation",
+      "Backend API connectivity",
+      "Platform-specific configuration",
+      "Packaging and release guidance",
+    ],
+  },
+  {
+    number: "05",
+    title: "Containerization and CI/CD",
+    description:
+      "Improve delivery workflows for .NET applications through containerization, automated builds, and repeatable deployment procedures.",
+    deliverables: [
+      "Docker configuration",
+      "Build and deployment pipelines",
+      "Environment and secret configuration",
+      "Health checks and operational runbooks",
+    ],
+  },
+];
 ---
 
 <BaseLayout
-  title="Services by Mohtashim Ul Haq | .NET, Agentic AI & SaaS Engineering"
-  description="Explore the services offered by Mohtashim Ul Haq, a software engineer focused on .NET applications, agentic AI integrations, SaaS architecture, and cloud deployment."
+  title="Services | Mohtashim Ul Haq"
+  description="Software engineering services covering .NET SaaS development, agent integration, MCP, cross-platform apps, and deployment automation."
 >
-  <section class="section">
-    <div class="container">
-      <h1>Services</h1>
-      <p>
-        Here are the services I offer, leveraging my expertise in .NET application development, agentic AI integrations, SaaS architecture, and cloud deployment.
+  <section class="container section services-page">
+    <header class="page-intro">
+      <p class="eyebrow">Services</p>
+      <h1>Engineering for practical software problems.</h1>
+      <p class="lead">
+        I focus on building and integrating software systems using
+        .NET, web technologies, AI tooling, and deployment automation.
+        Engagement scope should be agreed before work begins.
       </p>
-    </div>
-  </section>
+    </header>
 
-  <section class="section">
-    <div class="container">
-      <ul class="service-list">
-        <li>
-          <h2>.NET Application Development</h2>
-          <p>Building robust and scalable .NET applications tailored to your business needs.</p>
-        </li>
-        <li>
-          <h2>Agentic AI Integrations</h2>
-          <p>Integrating intelligent agent-based solutions into your software products for enhanced functionality.</p>
-        </li>
-        <li>
-          <h2>SaaS Architecture</h2>
-          <p>Designing and implementing SaaS platforms with a focus on performance, scalability, and security.</p>
-        </li>
-        <li>
-          <h2>Cloud Deployment</h2>
-          <p>Deploying applications to the cloud with best practices for reliability and maintainability.</p>
-        </li>
-      </ul>
+    <div class="service-list">
+      {services.map((service) => (
+        <article class="card service-card">
+          <span class="service-number">{service.number}</span>
+          <div>
+            <h2>{service.title}</h2>
+            <p>{service.description}</p>
+            <h3>Potential deliverables</h3>
+            <ul>
+              {service.deliverables.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+        </article>
+      ))}
     </div>
+
+    <section class="engagement card">
+      <h2>How an engagement starts</h2>
+      <ol>
+        <li>Clarify the business problem and expected outcome.</li>
+        <li>Agree on scope, constraints, access, and acceptance criteria.</li>
+        <li>Break the work into reviewable implementation milestones.</li>
+        <li>Validate the deliverables and document handover requirements.</li>
+      </ol>
+      <p>
+        Availability, pricing, timelines, and final scope are discussed
+        individually rather than promised in advance.
+      </p>
+      <a class="button button-primary" href="/contact/">Discuss a project</a>
+    </section>
   </section>
 </BaseLayout>
+
+<style>
+  .services-page {
+    max-width: 980px;
+  }
+
+  .page-intro {
+    padding-block: 3rem;
+  }
+
+  .lead {
+    max-width: 760px;
+    font-size: 1.15rem;
+  }
+
+  .service-list {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .service-card {
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .service-number {
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+  }
+
+  .service-card h2 {
+    margin-bottom: 0.75rem;
+    font-size: 1.4rem;
+  }
+
+  .service-card h3 {
+    font-size: 1rem;
+  }
+
+  .service-card li,
+  .engagement li {
+    margin-block: 0.35rem;
+    color: var(--color-muted);
+  }
+
+  .engagement {
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 540px) {
+    .service-card {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

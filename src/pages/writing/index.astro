@@ -1,42 +1,127 @@
+
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const articles = [
+  {
+    status: "Planned",
+    category: ".NET architecture",
+    title: "Structuring a multi-project .NET SaaS solution",
+    summary:
+      "How application, infrastructure, shared contracts, APIs, and migration tooling can be separated into maintainable project boundaries.",
+    slug: "",
+  },
+  {
+    status: "Planned",
+    category: "MCP and agent integration",
+    title: "Building an MCP server around existing application capabilities",
+    summary:
+      "Design considerations for exposing application operations as tools, handling authentication, and validating requests.",
+    slug: "",
+  },
+  {
+    status: "Planned",
+    category: "DevOps",
+    title: "From Docker Compose to repeatable cloud deployment",
+    summary:
+      "Lessons from image versioning, environment configuration, health checks, deployment verification, and recovery planning.",
+    slug: "",
+  },
+  {
+    status: "Planned",
+    category: "Cross-platform .NET",
+    title: "Preparing a MAUI Blazor Hybrid application for release",
+    summary:
+      "A practical look at environment configuration, signing, platform packaging, and production API connectivity.",
+    slug: "",
+  },
+  {
+    status: "Planned",
+    category: "Data science",
+    title: "Connecting data science concepts with software engineering",
+    summary:
+      "A place for carefully scoped academic projects, experiments, and explanations developed during postgraduate study.",
+    slug: "",
+  },
+];
 ---
 
 <BaseLayout
-  title="Writing by Mohtashim Ul Haq | .NET, Agentic AI & SaaS Engineering"
-  description="Read the latest articles and writings by Mohtashim Ul Haq on .NET, agentic AI, and SaaS engineering."
+  title="Technical Writing | Mohtashim Ul Haq"
+  description="Technical notes and case studies on .NET, SaaS architecture, agent integration, MCP, cloud deployment, and data science."
 >
-  <section class="section">
-    <div class="container">
-      <h1>Writing</h1>
-      <p>
-        Here are some of the articles and writings I've authored, sharing insights on .NET application development, agentic AI integrations, SaaS architecture, and cloud deployment.
+  <section class="container section writing-page">
+    <header class="page-intro">
+      <p class="eyebrow">Technical writing</p>
+      <h1>Notes from building and learning.</h1>
+      <p class="lead">
+        I use technical writing to explain implementation decisions,
+        trade-offs, practical lessons, and concepts worth examining
+        more deeply.
       </p>
-    </div>
-  </section>
+    </header>
 
-  <section class="section">
-    <div class="container">
-      <ul class="writing-list">
-        <li>
-          <a href="/writing/agentic-ai-integration/">
-            <h2>Agentic AI Integration in Modern Applications</h2>
-            <p>An in-depth look at integrating agentic AI into modern software applications, focusing on practical implementation and best practices.</p>
-          </a>
-        </li>
-        <li>
-          <a href="/writing/saas-architecture-best-practices/">
-            <h2>SaaS Architecture Best Practices</h2>
-            <p>Exploring the best practices for designing and implementing SaaS architectures that are scalable, secure, and maintainable.</p>
-          </a>
-        </li>
-        <li>   
-          <a href="/writing/cloud-deployment-strategies/">
-            <h2>Cloud Deployment Strategies for .NET Applications</h2>
-            <p>Discussing effective strategies for deploying .NET applications to the cloud, ensuring reliability and performance.</p>
-          </a>
-        </li>
-      </ul>
+    <div class="article-list">
+      {articles.map((article) => (
+        <article class="card article-card">
+          <div class="article-meta">
+            <span>{article.category}</span>
+            <span class="article-status">{article.status}</span>
+          </div>
+          <h2>{article.title}</h2>
+          <p>{article.summary}</p>
+          {article.slug ? (
+            <a href={article.slug}>Read article →</a>
+          ) : (
+            <p class="small-note">
+              Article planned — publication link will be added when available.
+            </p>
+          )}
+        </article>
+      ))}
     </div>
   </section>
-</BaseLayout>   
+</BaseLayout>
+
+<style>
+  .writing-page {
+    max-width: 900px;
+  }
+
+  .page-intro {
+    padding-block: 3rem;
+  }
+
+  .lead {
+    max-width: 720px;
+    font-size: 1.15rem;
+  }
+
+  .article-list {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.75rem;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+
+  .article-status {
+    color: var(--color-muted);
+  }
+
+  .article-card h2 {
+    margin-top: 1rem;
+    font-size: 1.45rem;
+  }
+
+  .small-note {
+    font-size: 0.85rem;
+  }
+</style>

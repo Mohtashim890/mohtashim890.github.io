@@ -1,17 +1,474 @@
+
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const technologies = [
+  ".NET 10",
+  "C#",
+  "Blazor",
+  "ASP.NET Core",
+  ".NET MAUI Blazor Hybrid",
+  "Model Context Protocol (MCP)",
+  "Entity Framework Core",
+  "PostgreSQL",
+  "Docker Compose",
+  "GitHub Actions",
+  "DigitalOcean",
+];
+
+const architecture = [
+  {
+    title: "Web application",
+    description:
+      "Blazor provides the web interface for interacting with the platform.",
+  },
+  {
+    title: "Application API",
+    description:
+      "ASP.NET Core exposes application operations through HTTP endpoints.",
+  },
+  {
+    title: "Agent and MCP integration",
+    description:
+      "Internal agent workflows and MCP server/client components connect AI-oriented workflows with permitted application tools.",
+  },
+  {
+    title: "Persistence",
+    description:
+      "Entity Framework Core and managed Supabase PostgreSQL provide the data access and persistence layer.",
+  },
+  {
+    title: "Cross-platform client",
+    description:
+      "A .NET MAUI Blazor Hybrid application extends the project toward Android and Windows.",
+  },
+  {
+    title: "Delivery and operations",
+    description:
+      "Docker Compose, Caddy, GitHub Actions, and a DigitalOcean VPS support deployment and external access.",
+  },
+];
+
+const engineeringDecisions = [
+  {
+    title: "Separate application responsibilities",
+    detail:
+      "Keep application logic, infrastructure, API access, and user interfaces in distinct projects to make responsibilities easier to understand and maintain.",
+  },
+  {
+    title: "Use a dedicated migration process",
+    detail:
+      "Run database migrations through a dedicated Migrator application instead of coupling schema updates to every web application startup.",
+  },
+  {
+    title: "Use stateless HTTP for MCP",
+    detail:
+      "The production MCP server uses stateless HTTP transport, with authentication and a defined set of product-management tools.",
+  },
+  {
+    title: "Automate deployment",
+    detail:
+      "Build and publish versioned container images through GitHub Actions and deploy them to the VPS using a release-oriented workflow.",
+  },
+  {
+    title: "Keep secrets outside source control",
+    detail:
+      "Supply production configuration separately from application code and restrict public network access to the required entry points.",
+  },
+];
 ---
 
 <BaseLayout
-  title="IronForge | .NET, Agentic AI & SaaS Engineering"
-  description="Explore IronForge, a comprehensive agentic SaaS platform built with .NET, Blazor, and cloud deployment."
-  >
-    <section class="section">
-        <div class="container">
-        <h1>IronForge</h1>
-        <p>
-            IronForge is a comprehensive agentic SaaS platform that integrates .NET web applications, APIs, and cross-platform development. It leverages Blazor for the front-end, ASP.NET Core for the back-end, and is designed for cloud deployment.
-        </p>
-        </div>
+  title="IronForge Case Study | Mohtashim Ul Haq"
+  description="Technical case study of IronForge, an agentic SaaS engineering project using .NET, Blazor, MCP, PostgreSQL, Docker, CI/CD, and cloud deployment."
+>
+  <article class="container case-study section">
+    <header class="case-hero">
+      <p class="eyebrow">Featured engineering project</p>
+      <h1>IronForge</h1>
+      <p class="lead">
+        Engineering an agentic SaaS platform across web, APIs, tool
+        integration, cross-platform clients, and cloud deployment.
+      </p>
+
+      <div class="actions">
+        <a class="button button-primary" href="https://app.mohtashim.dev/">
+          Open platform
+        </a>
+        <a class="button" href="https://github.com/mohtashim890">
+          Explore GitHub
+        </a>
+      </div>
+
+      <p class="notice">
+        This is an independently developed engineering project.
+        The case study describes implementation and deployment work;
+        it does not imply commercial customers or independently
+        verified business outcomes.
+      </p>
+    </header>
+
+    <section class="case-section">
+      <h2>Overview</h2>
+      <p>
+        IronForge is a production-oriented SaaS platform developed to
+        bring together modern .NET application development and
+        agent-oriented integration patterns. The project spans a
+        Blazor web application, ASP.NET Core API, MCP server and
+        client, shared application libraries, a database migration
+        utility, and a .NET MAUI Blazor Hybrid client.
+      </p>
+      <p>
+        Beyond implementing application features, the project covers
+        containerization, automated build and deployment workflows,
+        production configuration, HTTPS routing, and operational
+        validation on a cloud-hosted environment.
+      </p>
     </section>
-    </BaseLayout>   
+
+    <section class="case-section">
+      <h2>Project goals</h2>
+      <ul>
+        <li>Build a cohesive application using multiple .NET projects.</li>
+        <li>Expose application functionality through an ASP.NET Core API.</li>
+        <li>Connect permitted product operations to an MCP server and client.</li>
+        <li>Explore agentic workflows within a practical application context.</li>
+        <li>Prepare a cross-platform client with .NET MAUI Blazor Hybrid.</li>
+        <li>Automate container builds and cloud deployment.</li>
+        <li>Document architectural decisions and production trade-offs.</li>
+      </ul>
+    </section>
+
+    <section class="case-section">
+      <h2>Architecture</h2>
+      <p>
+        The platform separates user interfaces, API access, application
+        services, infrastructure, persistence, and external tool integration.
+        The diagram below summarizes the principal boundaries.
+      </p>
+
+      <div class="architecture">
+        <div class="architecture-node">
+          <span class="node-label">01 · User interfaces</span>
+          <h3>Blazor Web · MAUI Hybrid · MCP Client</h3>
+        </div>
+        <div class="connector" aria-hidden="true">↓</div>
+        <div class="architecture-node">
+          <span class="node-label">02 · Application access</span>
+          <h3>ASP.NET Core API</h3>
+        </div>
+        <div class="connector" aria-hidden="true">↓</div>
+        <div class="architecture-grid">
+          <div class="architecture-node">
+            <span class="node-label">03A · Agent workflows</span>
+            <h3>Internal agents</h3>
+            <p>Agent execution and permitted tool usage.</p>
+          </div>
+          <div class="architecture-node">
+            <span class="node-label">03B · Tool integration</span>
+            <h3>MCP server</h3>
+            <p>Stateless HTTP transport and product tools.</p>
+          </div>
+        </div>
+        <div class="connector" aria-hidden="true">↓</div>
+        <div class="architecture-node">
+          <span class="node-label">04 · Application and data</span>
+          <h3>Application services · EF Core · Supabase PostgreSQL</h3>
+        </div>
+        <div class="connector" aria-hidden="true">↓</div>
+        <div class="architecture-node">
+          <span class="node-label">05 · Delivery and operations</span>
+          <h3>GitHub Actions · Docker Compose · Caddy · DigitalOcean</h3>
+        </div>
+      </div>
+
+      <p class="small-note">
+        This is a conceptual architecture view, not a claim that every
+        UI calls every service directly. Exact request paths and agent
+        execution boundaries should be read alongside the relevant
+        implementation and configuration.
+      </p>
+
+      <h3>Project boundaries</h3>
+      <ul>
+        <li><code>IronForge.Web</code> — Blazor web application.</li>
+        <li><code>IronForge.Api</code> — ASP.NET Core API.</li>
+        <li><code>IronForge.Mcp</code> — MCP server.</li>
+        <li><code>IronForge.Mcp.Client</code> — MCP client interface.</li>
+        <li><code>IronForge.Application</code> — application logic.</li>
+        <li><code>IronForge.Infrastructure</code> — infrastructure integrations.</li>
+        <li><code>IronForge.Shared</code> — shared contracts and types.</li>
+        <li><code>IronForge.Migrator</code> — database migration utility.</li>
+        <li><code>IronForge</code> — MAUI Blazor Hybrid client.</li>
+      </ul>
+    </section>
+
+    <section class="case-section">
+      <h2>Agentic workflows and MCP</h2>
+      <p>
+        The project explores how model-driven workflows can interact
+        with application capabilities through explicitly defined tools.
+        MCP provides a protocol-based integration boundary between an
+        MCP client and the server's available tools.
+      </p>
+
+      <h3>Implemented MCP product tools</h3>
+      <ul class="tool-list">
+        <li><code>get_products</code> — retrieve products.</li>
+        <li><code>get_product</code> — retrieve a product.</li>
+        <li><code>create_product</code> — create a product.</li>
+        <li><code>update_product</code> — update a product.</li>
+        <li><code>delete_product</code> — delete a product.</li>
+      </ul>
+
+      <p>
+        The deployed MCP server uses stateless HTTP transport and JWT
+        authentication. The public MCP client provides a practical
+        demonstration of connecting to the server and interacting with
+        its tool interface.
+      </p>
+
+      <p>
+        The broader engineering challenge is not simply exposing tools.
+        A reliable agentic system also needs controlled permissions,
+        input validation, bounded execution, failure handling, and
+        evaluation. These concerns should be described according to
+        the protections actually implemented and tested in the current
+        codebase.
+      </p>
+
+      <div class="actions">
+        <a class="button" href="https://mcp-client.mohtashim.dev/">
+          Open MCP client
+        </a>
+        <a class="button" href="https://mcp.mohtashim.dev/">
+          MCP endpoint
+        </a>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <h2>Cross-platform application</h2>
+      <p>
+        The MAUI Blazor Hybrid project extends the application toward
+        Android and Windows using .NET and Blazor components. The client
+        is configured to use the production API in Release builds, while
+        development builds can target a local API.
+      </p>
+      <p>
+        Platform-specific packaging, signing, installation, and
+        authenticated end-to-end validation are tracked separately.
+        Only claim a platform release is complete once its package has
+        been installed and the key application flows have been tested.
+      </p>
+    </section>
+
+    <section class="case-section">
+      <h2>Deployment and operations</h2>
+      <p>
+        IronForge is deployed on a DigitalOcean VPS. Docker Compose
+        runs the application services, Caddy provides HTTPS routing,
+        and GitHub Actions builds and publishes versioned container
+        images before deploying the selected release.
+      </p>
+      <ul>
+        <li>Containerized web, API, MCP, and MCP client services.</li>
+        <li>Managed Supabase PostgreSQL rather than a local database container.</li>
+        <li>Dedicated database migration process.</li>
+        <li>Environment-based production configuration.</li>
+        <li>HTTPS and reverse proxy routing through Caddy.</li>
+        <li>Automated build, image publishing, and deployment workflow.</li>
+        <li>Health-check and deployment verification steps.</li>
+      </ul>
+      <p>
+        Database schema changes require special care: rolling back
+        application images does not automatically reverse a database
+        migration. Backward-compatible migrations and a database
+        recovery strategy remain important production considerations.
+      </p>
+    </section>
+
+    <section class="case-section">
+      <h2>Engineering decisions</h2>
+      <div class="decision-list">
+        {engineeringDecisions.map((decision) => (
+          <article class="card decision">
+            <h3>{decision.title}</h3>
+            <p>{decision.detail}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="case-section">
+      <h2>Technology stack</h2>
+      <div class="tech-list">
+        {technologies.map((technology) => (
+          <span>{technology}</span>
+        ))}
+      </div>
+    </section>
+
+    <section class="case-section">
+      <h2>Verification and limitations</h2>
+      <p>
+        The project has a public deployment, automated container
+        delivery, an API health endpoint, and a working MCP demonstration.
+        These provide evidence of practical integration and deployment work.
+      </p>
+      <p>
+        The portfolio does not claim measured production traffic,
+        commercial adoption, formal security certification, quantified
+        performance gains, or comprehensive test coverage without
+        supporting evidence. Further improvements include stronger
+        automated regression coverage, deeper observability, and
+        continued validation of mobile release workflows.
+      </p>
+    </section>
+
+    <section class="case-section next-step">
+      <h2>Explore the project</h2>
+      <p>
+        Review the running application, inspect the source code, or
+        discuss a similar engineering problem.
+      </p>
+      <div class="actions">
+        <a class="button button-primary" href="https://app.mohtashim.dev/">
+          Open IronForge
+        </a>
+        <a class="button" href="/contact/">
+          Contact me
+        </a>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .case-study {
+    max-width: 900px;
+  }
+
+  .case-hero {
+    padding-block: 3rem 4rem;
+  }
+
+  .lead {
+    max-width: 760px;
+    font-size: 1.25rem;
+  }
+
+  .notice,
+  .small-note {
+    font-size: 0.9rem;
+  }
+
+  .notice {
+    margin-top: 2rem;
+    padding: 1rem;
+    border-left: 3px solid var(--color-accent);
+    background: var(--color-surface);
+  }
+
+  .case-section {
+    padding-block: 2.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .case-section h2 {
+    margin-bottom: 1.25rem;
+  }
+
+  .case-section h3 {
+    margin-top: 1.75rem;
+  }
+
+  .case-section p,
+  .case-section li {
+    max-width: 780px;
+  }
+
+  .case-section li {
+    margin-block: 0.4rem;
+    color: var(--color-muted);
+  }
+
+  .architecture {
+    display: grid;
+    gap: 0.65rem;
+    margin-block: 2rem;
+  }
+
+  .architecture-node {
+    padding: 1.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+    overflow-wrap: anywhere;
+  }
+
+  .architecture-node h3 {
+    margin: 0.4rem 0;
+  }
+
+  .architecture-node p {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+  }
+
+  .node-label {
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+
+  .connector {
+    color: var(--color-accent);
+    text-align: center;
+    font-size: 1.5rem;
+  }
+
+  .architecture-grid,
+  .decision-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .decision h3 {
+    margin-top: 0;
+  }
+
+  .decision p {
+    margin-bottom: 0;
+  }
+
+  .tech-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .tech-list span {
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    color: var(--color-muted);
+    font-size: 0.85rem;
+  }
+
+  .tool-list code {
+    color: var(--color-text);
+  }
+
+  .next-step {
+    padding-bottom: 1rem;
+  }
+
+  @media (max-width: 640px) {
+    .architecture-grid,
+    .decision-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

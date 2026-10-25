@@ -1,17 +1,139 @@
+
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
 <BaseLayout
-  title="About Mohtashim Ul Haq | .NET, Agentic AI & SaaS Engineering"
-  description="Learn more about Mohtashim Ul Haq, a software engineer focused on .NET applications, agentic AI integrations, SaaS architecture, and cloud deployment."  
+  title="About | Mohtashim Ul Haq"
+  description="Professional background, software engineering interests, and postgraduate study in Data Science at Universiti Sains Malaysia."
 >
-  <section class="section">
-    <div class="container">
-      <h1>About Mohtashim Ul Haq</h1>
-      <p>
-        I'm a software engineer with a passion for building intelligent software products. My expertise lies in .NET application development, agentic AI integrations, SaaS architecture, and cloud deployment.
+  <article class="container section about-page">
+    <header class="page-intro">
+      <p class="eyebrow">About</p>
+      <h1>Software engineering with a systems perspective.</h1>
+      <p class="lead">
+        I work on software development across application architecture,
+        APIs, integrations, and deployment. My current project,
+        IronForge, brings these disciplines together in an agentic
+        SaaS engineering environment.
       </p>
-    </div>
-  </section>
+    </header>
+
+    <section class="about-section">
+      <h2>Professional focus</h2>
+      <p>
+        My engineering interests include maintainable .NET applications,
+        distributed application boundaries, AI-enabled workflows,
+        tool integrations, and reliable software delivery.
+      </p>
+      <p>
+        I value practical implementation: defining component
+        responsibilities, documenting trade-offs, validating behavior,
+        and making software reproducible to build and deploy.
+      </p>
+    </section>
+
+    <section class="about-section">
+      <h2>Education</h2>
+      <article class="card education-card">
+        <p class="eyebrow">Postgraduate study · In progress</p>
+        <h3>Master's in Data Science</h3>
+        <p class="institution">Universiti Sains Malaysia (USM)</p>
+        <p>
+          My postgraduate study complements my software engineering
+          work by developing my understanding of data-driven methods
+          and their application in software systems.
+        </p>
+        <p class="small-note">
+          Academic research topics and completed coursework will be
+          added as they are confirmed and can be documented accurately.
+        </p>
+      </article>
+    </section>
+
+    <section class="about-section">
+      <h2>Current engineering project</h2>
+      <h3>IronForge</h3>
+      <p>
+        IronForge is my flagship project for exploring end-to-end
+        software engineering across Blazor, ASP.NET Core APIs, MCP
+        integration, internal agent workflows, MAUI Blazor Hybrid,
+        PostgreSQL, Docker, and cloud deployment.
+      </p>
+      <a href="/projects/ironforge/">Explore the IronForge case study →</a>
+    </section>
+
+    <section class="about-section">
+      <h2>Areas of interest</h2>
+      <ul>
+        <li>Reliable, maintainable .NET application architecture.</li>
+        <li>Agentic systems and tool-based integrations.</li>
+        <li>API design, authorization, and integration boundaries.</li>
+        <li>Cross-platform application development.</li>
+        <li>Cloud deployment, testing, and operational reliability.</li>
+        <li>Practical applications of data science and machine learning.</li>
+      </ul>
+    </section>
+
+    <section class="about-section">
+      <h2>Résumé</h2>
+      <p>
+        For a concise overview of my professional experience,
+        technical skills, and education, see my résumé.
+      </p>
+      <a class="button button-primary" href="/documents/resume.pdf" download>
+        Download résumé (PDF)
+      </a>
+      <p class="small-note">
+        The PDF must be added to the public/documents directory before
+        this download link is published.
+      </p>
+    </section>
+
+    <section class="about-section">
+      <h2>Get in touch</h2>
+      <p>
+        For software engineering opportunities or project enquiries,
+        use the contact page.
+      </p>
+      <a class="button" href="/contact/">Contact me</a>
+    </section>
+  </article>
 </BaseLayout>
+
+<style>
+  .about-page {
+    max-width: 850px;
+  }
+
+  .page-intro {
+    padding-block: 3rem;
+  }
+
+  .lead {
+    max-width: 740px;
+    font-size: 1.15rem;
+  }
+
+  .about-section {
+    padding-block: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .education-card {
+    margin-top: 1.25rem;
+  }
+
+  .education-card h3 {
+    margin-bottom: 0.4rem;
+  }
+
+  .institution {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  .small-note {
+    font-size: 0.85rem;
+  }
+</style>
