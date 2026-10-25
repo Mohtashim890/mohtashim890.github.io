@@ -1,474 +1,804 @@
-
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import BrowserFrame from "../../components/BrowserFrame.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import PhoneFrame from "../../components/PhoneFrame.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import TechTag from "../../components/TechTag.astro";
+import {
+  agents,
+  apps,
+  challenges,
+  checkInMethods,
+  facts,
+  gallery,
+  governanceFlow,
+  governanceRules,
+  ironforge,
+  metrics,
+  multiTenancy,
+  problems,
+  reliability,
+  security,
+  stack,
+} from "../../data/ironforge";
 
-const technologies = [
-  ".NET 10",
-  "C#",
-  "Blazor",
-  "ASP.NET Core",
-  ".NET MAUI Blazor Hybrid",
-  "Model Context Protocol (MCP)",
-  "Entity Framework Core",
-  "PostgreSQL",
-  "Docker Compose",
-  "GitHub Actions",
-  "DigitalOcean",
-];
-
-const architecture = [
-  {
-    title: "Web application",
-    description:
-      "Blazor provides the web interface for interacting with the platform.",
-  },
-  {
-    title: "Application API",
-    description:
-      "ASP.NET Core exposes application operations through HTTP endpoints.",
-  },
-  {
-    title: "Agent and MCP integration",
-    description:
-      "Internal agent workflows and MCP server/client components connect AI-oriented workflows with permitted application tools.",
-  },
-  {
-    title: "Persistence",
-    description:
-      "Entity Framework Core and managed Supabase PostgreSQL provide the data access and persistence layer.",
-  },
-  {
-    title: "Cross-platform client",
-    description:
-      "A .NET MAUI Blazor Hybrid application extends the project toward Android and Windows.",
-  },
-  {
-    title: "Delivery and operations",
-    description:
-      "Docker Compose, Caddy, GitHub Actions, and a DigitalOcean VPS support deployment and external access.",
-  },
-];
-
-const engineeringDecisions = [
-  {
-    title: "Separate application responsibilities",
-    detail:
-      "Keep application logic, infrastructure, API access, and user interfaces in distinct projects to make responsibilities easier to understand and maintain.",
-  },
-  {
-    title: "Use a dedicated migration process",
-    detail:
-      "Run database migrations through a dedicated Migrator application instead of coupling schema updates to every web application startup.",
-  },
-  {
-    title: "Use stateless HTTP for MCP",
-    detail:
-      "The production MCP server uses stateless HTTP transport, with authentication and a defined set of product-management tools.",
-  },
-  {
-    title: "Automate deployment",
-    detail:
-      "Build and publish versioned container images through GitHub Actions and deploy them to the VPS using a release-oriented workflow.",
-  },
-  {
-    title: "Keep secrets outside source control",
-    detail:
-      "Supply production configuration separately from application code and restrict public network access to the required entry points.",
-  },
-];
+const screenshots = gallery.filter((shot) => shot.src);
 ---
 
 <BaseLayout
   title="IronForge Case Study | Mohtashim Ul Haq"
-  description="Technical case study of IronForge, an agentic SaaS engineering project using .NET, Blazor, MCP, PostgreSQL, Docker, CI/CD, and cloud deployment."
+  description="IronForge: a multi-tenant gym management SaaS with governed AI agents, built solo with .NET 10, Blazor, .NET MAUI, PostgreSQL, Stripe Connect and MCP."
 >
-  <article class="container case-study section">
-    <header class="case-hero">
-      <p class="eyebrow">Featured engineering project</p>
+  <section class="page-hero">
+    <div class="container case-hero">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/projects/">Work</a> / <span aria-current="page">IronForge</span>
+      </nav>
+      <p class="eyebrow">Case study · 2026 · Solo build</p>
       <h1>IronForge</h1>
-      <p class="lead">
-        Engineering an agentic SaaS platform across web, APIs, tool
-        integration, cross-platform clients, and cloud deployment.
+      <p class="subtitle">
+        Agentic, multi-tenant gym management SaaS, with{" "}
+        <strong>governed AI agents</strong>, offline check-in passes and
+        billing-aware fingerprint terminals.
       </p>
-
       <div class="actions">
-        <a class="button button-primary" href="https://app.mohtashim.dev/">
-          Open platform
-        </a>
-        <a class="button" href="https://github.com/mohtashim890">
-          Explore GitHub
-        </a>
+        <a class="button button-primary" href={ironforge.liveUrl} target="_blank" rel="noopener noreferrer">Open live dashboard ↗</a>
+        <a class="button" href={ironforge.sourceUrl} target="_blank" rel="noopener noreferrer">View source on GitHub ↗</a>
       </div>
 
-      <p class="notice">
-        This is an independently developed engineering project.
-        The case study describes implementation and deployment work;
-        it does not imply commercial customers or independently
-        verified business outcomes.
-      </p>
-    </header>
-
-    <section class="case-section">
-      <h2>Overview</h2>
-      <p>
-        IronForge is a production-oriented SaaS platform developed to
-        bring together modern .NET application development and
-        agent-oriented integration patterns. The project spans a
-        Blazor web application, ASP.NET Core API, MCP server and
-        client, shared application libraries, a database migration
-        utility, and a .NET MAUI Blazor Hybrid client.
-      </p>
-      <p>
-        Beyond implementing application features, the project covers
-        containerization, automated build and deployment workflows,
-        production configuration, HTTPS routing, and operational
-        validation on a cloud-hosted environment.
-      </p>
-    </section>
-
-    <section class="case-section">
-      <h2>Project goals</h2>
-      <ul>
-        <li>Build a cohesive application using multiple .NET projects.</li>
-        <li>Expose application functionality through an ASP.NET Core API.</li>
-        <li>Connect permitted product operations to an MCP server and client.</li>
-        <li>Explore agentic workflows within a practical application context.</li>
-        <li>Prepare a cross-platform client with .NET MAUI Blazor Hybrid.</li>
-        <li>Automate container builds and cloud deployment.</li>
-        <li>Document architectural decisions and production trade-offs.</li>
-      </ul>
-    </section>
-
-    <section class="case-section">
-      <h2>Architecture</h2>
-      <p>
-        The platform separates user interfaces, API access, application
-        services, infrastructure, persistence, and external tool integration.
-        The diagram below summarizes the principal boundaries.
-      </p>
-
-      <div class="architecture">
-        <div class="architecture-node">
-          <span class="node-label">01 · User interfaces</span>
-          <h3>Blazor Web · MAUI Hybrid · MCP Client</h3>
-        </div>
-        <div class="connector" aria-hidden="true">↓</div>
-        <div class="architecture-node">
-          <span class="node-label">02 · Application access</span>
-          <h3>ASP.NET Core API</h3>
-        </div>
-        <div class="connector" aria-hidden="true">↓</div>
-        <div class="architecture-grid">
-          <div class="architecture-node">
-            <span class="node-label">03A · Agent workflows</span>
-            <h3>Internal agents</h3>
-            <p>Agent execution and permitted tool usage.</p>
+      <dl class="facts">
+        {facts.map((fact) => (
+          <div>
+            <dt>{fact.label}</dt>
+            <dd>{fact.value}</dd>
           </div>
-          <div class="architecture-node">
-            <span class="node-label">03B · Tool integration</span>
-            <h3>MCP server</h3>
-            <p>Stateless HTTP transport and product tools.</p>
-          </div>
+        ))}
+      </dl>
+
+      <BrowserFrame class="hero-shot" url="mohtashim.dev" height="420px" />
+    </div>
+  </section>
+
+  <section class="metrics-strip" aria-label="Project metrics">
+    <dl class="container">
+      {metrics.map((metric) => (
+        <div>
+          <dt>{metric.label}</dt>
+          <dd>{metric.value}</dd>
         </div>
-        <div class="connector" aria-hidden="true">↓</div>
-        <div class="architecture-node">
-          <span class="node-label">04 · Application and data</span>
-          <h3>Application services · EF Core · Supabase PostgreSQL</h3>
-        </div>
-        <div class="connector" aria-hidden="true">↓</div>
-        <div class="architecture-node">
-          <span class="node-label">05 · Delivery and operations</span>
-          <h3>GitHub Actions · Docker Compose · Caddy · DigitalOcean</h3>
-        </div>
+      ))}
+    </dl>
+  </section>
+
+  <section class="section">
+    <div class="container split">
+      <div class="card problem">
+        <p class="eyebrow muted">The problem</p>
+        <h2>Gyms run on spreadsheets, paper and WhatsApp</h2>
+        <ul>
+          {problems.map((problem) => <li>{problem}</li>)}
+        </ul>
       </div>
-
-      <p class="small-note">
-        This is a conceptual architecture view, not a claim that every
-        UI calls every service directly. Exact request paths and agent
-        execution boundaries should be read alongside the relevant
-        implementation and configuration.
-      </p>
-
-      <h3>Project boundaries</h3>
-      <ul>
-        <li><code>IronForge.Web</code> — Blazor web application.</li>
-        <li><code>IronForge.Api</code> — ASP.NET Core API.</li>
-        <li><code>IronForge.Mcp</code> — MCP server.</li>
-        <li><code>IronForge.Mcp.Client</code> — MCP client interface.</li>
-        <li><code>IronForge.Application</code> — application logic.</li>
-        <li><code>IronForge.Infrastructure</code> — infrastructure integrations.</li>
-        <li><code>IronForge.Shared</code> — shared contracts and types.</li>
-        <li><code>IronForge.Migrator</code> — database migration utility.</li>
-        <li><code>IronForge</code> — MAUI Blazor Hybrid client.</li>
-      </ul>
-    </section>
-
-    <section class="case-section">
-      <h2>Agentic workflows and MCP</h2>
-      <p>
-        The project explores how model-driven workflows can interact
-        with application capabilities through explicitly defined tools.
-        MCP provides a protocol-based integration boundary between an
-        MCP client and the server's available tools.
-      </p>
-
-      <h3>Implemented MCP product tools</h3>
-      <ul class="tool-list">
-        <li><code>get_products</code> — retrieve products.</li>
-        <li><code>get_product</code> — retrieve a product.</li>
-        <li><code>create_product</code> — create a product.</li>
-        <li><code>update_product</code> — update a product.</li>
-        <li><code>delete_product</code> — delete a product.</li>
-      </ul>
-
-      <p>
-        The deployed MCP server uses stateless HTTP transport and JWT
-        authentication. The public MCP client provides a practical
-        demonstration of connecting to the server and interacting with
-        its tool interface.
-      </p>
-
-      <p>
-        The broader engineering challenge is not simply exposing tools.
-        A reliable agentic system also needs controlled permissions,
-        input validation, bounded execution, failure handling, and
-        evaluation. These concerns should be described according to
-        the protections actually implemented and tested in the current
-        codebase.
-      </p>
-
-      <div class="actions">
-        <a class="button" href="https://mcp-client.mohtashim.dev/">
-          Open MCP client
-        </a>
-        <a class="button" href="https://mcp.mohtashim.dev/">
-          MCP endpoint
-        </a>
+      <div class="solution">
+        <p class="eyebrow">The solution</p>
+        <h2>An isolated workspace per gym, with four connected apps</h2>
+        <p>
+          Billing, reminders and expiry run themselves. Members check in with
+          an offline QR pass or an existing fingerprint terminal that now
+          refuses unpaid members, even with the internet down. AI agents take
+          on routine admin and coaching, inside the same permission rules as
+          people.
+        </p>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="case-section">
-      <h2>Cross-platform application</h2>
-      <p>
-        The MAUI Blazor Hybrid project extends the application toward
-        Android and Windows using .NET and Blazor components. The client
-        is configured to use the production API in Release builds, while
-        development builds can target a local API.
-      </p>
-      <p>
-        Platform-specific packaging, signing, installation, and
-        authenticated end-to-end validation are tracked separately.
-        Only claim a platform release is complete once its package has
-        been installed and the key application flows have been tested.
-      </p>
-    </section>
-
-    <section class="case-section">
-      <h2>Deployment and operations</h2>
-      <p>
-        IronForge is deployed on a DigitalOcean VPS. Docker Compose
-        runs the application services, Caddy provides HTTPS routing,
-        and GitHub Actions builds and publishes versioned container
-        images before deploying the selected release.
-      </p>
-      <ul>
-        <li>Containerized web, API, MCP, and MCP client services.</li>
-        <li>Managed Supabase PostgreSQL rather than a local database container.</li>
-        <li>Dedicated database migration process.</li>
-        <li>Environment-based production configuration.</li>
-        <li>HTTPS and reverse proxy routing through Caddy.</li>
-        <li>Automated build, image publishing, and deployment workflow.</li>
-        <li>Health-check and deployment verification steps.</li>
-      </ul>
-      <p>
-        Database schema changes require special care: rolling back
-        application images does not automatically reverse a database
-        migration. Backward-compatible migrations and a database
-        recovery strategy remain important production considerations.
-      </p>
-    </section>
-
-    <section class="case-section">
-      <h2>Engineering decisions</h2>
-      <div class="decision-list">
-        {engineeringDecisions.map((decision) => (
-          <article class="card decision">
-            <h3>{decision.title}</h3>
-            <p>{decision.detail}</p>
+  <section class="section">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Four apps, one platform"
+        title="Every audience gets its own front end, all on one back end"
+      />
+      <div class="grid-auto">
+        {apps.map((app) => (
+          <article class="card app">
+            <span class="card-label accent-label">{app.audience}</span>
+            <h3>{app.title}</h3>
+            <p>{app.description}</p>
           </article>
         ))}
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="case-section">
-      <h2>Technology stack</h2>
-      <div class="tech-list">
-        {technologies.map((technology) => (
-          <span>{technology}</span>
+  <section class="section">
+    <div class="container split checkin">
+      <div>
+        <p class="eyebrow">Feature highlight</p>
+        <h2>Four ways in, and none of them can be shared</h2>
+        <p class="lead">
+          The member's phone computes a rotating, HMAC-signed pass offline
+          every 30 seconds, after a biometric unlock. The pass is bound to one
+          phone and protected against replay. Admins choose which methods each
+          gym allows.
+        </p>
+        <ul class="methods">
+          {checkInMethods.map((method) => (
+            <li>
+              <strong>{method.title}</strong>
+              <span>{method.detail}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="checkin-visual">
+        <PhoneFrame width="200px" />
+        <div class="terminal-card">
+          <span class="card-label">ZKTeco terminals</span>
+          <p class="terminal-claim">Refuses unpaid members by itself, even offline.</p>
+          <p>
+            Push-protocol sync of access windows, user import and attendance
+            logs. No fingerprints are ever stored.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading
+        eyebrow="AI governance"
+        title="An agent never has more authority than the person it acts for"
+        intro="Agents call the same permission-checked services as the UI, so tenant isolation, validation and auditing are identical."
+      />
+
+      <div class="card governance">
+        <ol class="flow">
+          {governanceFlow.map((step, index) => (
+            <li class:list={{ key: step.key }}>
+              <div>
+                <span class="step-number">{String(index + 1).padStart(2, "0")}</span>
+                <strong>{step.title}</strong>
+                <span class="step-detail">{step.detail}</span>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <ul class="rules">
+          {governanceRules.map((rule) => (
+            <li><strong>{rule.label}:</strong> {rule.detail}</li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="grid-auto agents">
+        {agents.map((agent) => (
+          <article class="card">
+            <span class="card-label">{agent.audience}</span>
+            <h3>{agent.title}</h3>
+            <p>{agent.description}</p>
+          </article>
         ))}
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="case-section">
-      <h2>Verification and limitations</h2>
-      <p>
-        The project has a public deployment, automated container
-        delivery, an API health endpoint, and a working MCP demonstration.
-        These provide evidence of practical integration and deployment work.
-      </p>
-      <p>
-        The portfolio does not claim measured production traffic,
-        commercial adoption, formal security certification, quantified
-        performance gains, or comprehensive test coverage without
-        supporting evidence. Further improvements include stronger
-        automated regression coverage, deeper observability, and
-        continued validation of mobile release workflows.
-      </p>
-    </section>
+  <section class="section">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Architecture"
+        title="Clean layers, one UI codebase, and tenant isolation by default"
+      />
+      <div class="architecture">
+        <div class="layers" role="img" aria-label="Front ends (Web, Platform, MAUI) share IronForge.Shared and call the API, MCP server and Migrator over HTTPS with JWT. These sit on Infrastructure, which sits on the Application layer.">
+          <div class="layer-row">
+            <div class="layer"><strong>IronForge.Web</strong><span>Gym dashboard · UI.Admin</span></div>
+            <div class="layer"><strong>IronForge.Platform</strong><span>Operator console · UI.Platform</span></div>
+            <div class="layer"><strong>IronForge (MAUI)</strong><span>Member app · UI.Member</span></div>
+          </div>
+          <div class="layer layer-shared"><strong>IronForge.Shared</strong> <span>DTOs, permissions, typed API clients, UI kit</span></div>
+          <p class="layer-link">↓ HTTPS + JWT ↓</p>
+          <div class="layer-row">
+            <div class="layer layer-entry"><strong>IronForge.Api</strong><span>REST, webhooks, jobs</span></div>
+            <div class="layer layer-entry"><strong>IronForge.Mcp</strong><span>MCP server</span></div>
+            <div class="layer layer-entry"><strong>IronForge.Migrator</strong><span>Migrations, seeding</span></div>
+          </div>
+          <div class="layer"><strong>Infrastructure</strong> <span>EF Core + PostgreSQL, Stripe, SMTP outbox, background services</span></div>
+          <div class="layer layer-core"><strong>Application</strong> <span>Entities, business services, authorization, AI agents (no EF Core reference)</span></div>
+        </div>
+        <div class="card tenancy">
+          <h3>Multi-tenancy</h3>
+          <ul>
+            {multiTenancy.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <section class="case-section next-step">
-      <h2>Explore the project</h2>
-      <p>
-        Review the running application, inspect the source code, or
-        discuss a similar engineering problem.
-      </p>
-      <div class="actions">
-        <a class="button button-primary" href="https://app.mohtashim.dev/">
-          Open IronForge
-        </a>
-        <a class="button" href="/contact/">
-          Contact me
-        </a>
+  <section class="section">
+    <div class="container">
+      <SectionHeading eyebrow="Challenges and solutions" title="The hard parts" />
+      <div class="grid-auto challenges">
+        {challenges.map((challenge, index) => (
+          <article class="card">
+            <span class="challenge-number">{String(index + 1).padStart(2, "0")}</span>
+            <h3>{challenge.title}</h3>
+            <p>{challenge.solution}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split">
+      <div class="card">
+        <p class="eyebrow">Security</p>
+        <ul class="check-list">
+          {security.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+      <div class="card">
+        <p class="eyebrow">Reliability</p>
+        <ul class="check-list">
+          {reliability.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Tech stack</p>
+      <dl class="stack">
+        {stack.map((group) => (
+          <div>
+            <dt>{group.group}</dt>
+            <dd>
+              <ul class="tag-list">
+                {group.items.map((item) => <TechTag variant="outline">{item}</TechTag>)}
+              </ul>
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  {screenshots.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <SectionHeading eyebrow="Screens" title="Inside the product" />
+        <div class="grid-auto">
+          {screenshots.map((shot) => (
+            <figure class="shot">
+              <img src={shot.src} alt={shot.caption} loading="lazy" />
+              <figcaption>{shot.caption}</figcaption>
+            </figure>
+          ))}
+        </div>
       </div>
     </section>
-  </article>
+  )}
+
+  <section class="section">
+    <div class="container">
+      <p class="status">
+        <strong>Status:</strong> production-grade and deployed with CI/CD,
+        being prepared for its first gyms in Pakistan and Malaysia. No paying
+        customers yet. Local payment gateways (Easypaisa, Touch 'n Go) are
+        planned.
+      </p>
+    </div>
+  </section>
+
+  <CtaBand
+    variant="dark"
+    title="Need a platform like this built?"
+    text="Multi-tenant SaaS, governed AI agents or a .NET MAUI app. Let's talk."
+  >
+    <a class="button button-primary" href="/contact/">Start a conversation</a>
+    <a class="button" href="/services/">See services</a>
+  </CtaBand>
 </BaseLayout>
 
 <style>
-  .case-study {
-    max-width: 900px;
-  }
-
+  /* Hero */
   .case-hero {
-    padding-block: 3rem 4rem;
-  }
-
-  .lead {
-    max-width: 760px;
-    font-size: 1.25rem;
-  }
-
-  .notice,
-  .small-note {
-    font-size: 0.9rem;
-  }
-
-  .notice {
-    margin-top: 2rem;
-    padding: 1rem;
-    border-left: 3px solid var(--color-accent);
-    background: var(--color-surface);
-  }
-
-  .case-section {
-    padding-block: 2.5rem;
-    border-top: 1px solid var(--color-border);
-  }
-
-  .case-section h2 {
-    margin-bottom: 1.25rem;
-  }
-
-  .case-section h3 {
-    margin-top: 1.75rem;
-  }
-
-  .case-section p,
-  .case-section li {
-    max-width: 780px;
-  }
-
-  .case-section li {
-    margin-block: 0.4rem;
-    color: var(--color-muted);
-  }
-
-  .architecture {
-    display: grid;
-    gap: 0.65rem;
-    margin-block: 2rem;
-  }
-
-  .architecture-node {
-    padding: 1.25rem;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius);
-    background: var(--color-surface);
-    overflow-wrap: anywhere;
-  }
-
-  .architecture-node h3 {
-    margin: 0.4rem 0;
-  }
-
-  .architecture-node p {
-    margin-bottom: 0;
-    font-size: 0.9rem;
-  }
-
-  .node-label {
-    color: var(--color-accent);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-  }
-
-  .connector {
-    color: var(--color-accent);
-    text-align: center;
-    font-size: 1.5rem;
-  }
-
-  .architecture-grid,
-  .decision-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
-  }
-
-  .decision h3 {
-    margin-top: 0;
-  }
-
-  .decision p {
-    margin-bottom: 0;
-  }
-
-  .tech-list {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
+    flex-direction: column;
+    gap: 1.35rem;
+    padding-top: 3.5rem;
   }
 
-  .tech-list span {
-    padding: 0.4rem 0.75rem;
-    border: 1px solid var(--color-border);
-    border-radius: 999px;
+  .case-hero > * {
+    margin: 0;
+  }
+
+  .breadcrumb {
     color: var(--color-muted);
-    font-size: 0.85rem;
+    font-size: 0.875rem;
   }
 
-  .tool-list code {
+  .breadcrumb a {
+    color: var(--color-muted);
+  }
+
+  .breadcrumb span {
     color: var(--color-text);
   }
 
-  .next-step {
-    padding-bottom: 1rem;
+  .case-hero .eyebrow {
+    margin-top: 0.75rem;
+  }
+
+  .case-hero h1 {
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+  }
+
+  .subtitle {
+    max-width: 760px;
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 2.4vw, 1.75rem);
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+  }
+
+  .subtitle strong {
+    color: var(--color-text);
+    font-weight: 500;
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 1px;
+    margin-top: 1rem !important;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-border);
+  }
+
+  .facts div {
+    padding: 1.1rem 1.35rem;
+    background: var(--color-surface);
+  }
+
+  .facts dt,
+  .metrics-strip dt,
+  .stack dt {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .facts dt {
+    color: var(--color-muted);
+  }
+
+  .facts dd {
+    margin: 0.35rem 0 0;
+    font-size: 0.94rem;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .case-hero :global(.hero-shot) {
+    margin-top: 1.5rem;
+    border-bottom: 0;
+    border-radius: 16px 16px 0 0;
+  }
+
+  /* Metrics strip */
+  .metrics-strip {
+    background: var(--color-text);
+  }
+
+  .metrics-strip dl {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    margin-block: 0;
+  }
+
+  .metrics-strip div {
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 1.85rem 1.25rem;
+  }
+
+  .metrics-strip dt {
+    color: var(--color-on-ink-muted);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .metrics-strip dd {
+    margin: 0;
+    color: var(--color-accent-on-ink);
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+
+  /* Problem / solution */
+  .problem h2,
+  .solution h2 {
+    font-size: 1.85rem;
+  }
+
+  .problem ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin: 0;
+    padding-left: 1.25rem;
+    color: var(--color-muted);
+  }
+
+  .solution {
+    padding: 1.65rem;
+    border-radius: var(--radius);
+    background: var(--color-accent-soft);
+  }
+
+  .solution p:last-child {
+    margin: 0;
+    color: var(--color-text);
+  }
+
+  /* Apps */
+  .app h3,
+  .agents h3 {
+    margin-bottom: 0.5rem;
+  }
+
+  .accent-label {
+    color: var(--color-accent-ink);
+  }
+
+  /* Check-in */
+  .checkin {
+    align-items: center;
+  }
+
+  .checkin .lead {
+    margin-block: 1rem 1.5rem;
+  }
+
+  .methods {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .methods li {
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    background: var(--color-surface);
+  }
+
+  .methods strong,
+  .methods span {
+    display: block;
+  }
+
+  .methods span {
+    color: var(--color-muted);
+    font-size: 0.875rem;
+  }
+
+  .checkin-visual {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+  }
+
+  .terminal-card {
+    flex: 1 1 220px;
+    max-width: 300px;
+    padding: 1.4rem;
+    border-radius: var(--radius);
+    background: var(--color-text);
+  }
+
+  .terminal-card .card-label {
+    color: var(--color-accent-on-ink);
+  }
+
+  .terminal-card p {
+    margin: 0.5rem 0 0;
+    color: var(--color-on-ink-muted);
+    font-size: 0.875rem;
+  }
+
+  .terminal-card .terminal-claim {
+    color: #ffffff;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  /* Governance */
+  .governance {
+    padding: 2rem;
+  }
+
+  .flow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .flow li {
+    display: flex;
+    flex: 1 1 140px;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .flow li + li::before {
+    content: "→" / "";
+    color: var(--color-muted);
+    font-size: 1.1rem;
+  }
+
+  .flow li > div {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.2rem;
+    align-self: stretch;
+    padding: 0.85rem;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    background: var(--color-bg);
+  }
+
+  .flow li.key > div {
+    border-color: var(--color-accent-soft);
+    background: var(--color-accent-soft);
+  }
+
+  .flow strong {
+    font-size: 0.92rem;
+    line-height: 1.25;
+  }
+
+  .step-number {
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+
+  .key .step-number {
+    color: var(--color-accent-ink);
+  }
+
+  .step-detail {
+    color: var(--color-muted);
+    font-size: 0.8rem;
+    line-height: 1.45;
+  }
+
+  .rules {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    margin: 1.4rem 0 0;
+    padding: 1.1rem 0 0;
+    border-top: 1px solid var(--color-border);
+    color: var(--color-muted);
+    font-size: 0.875rem;
+    list-style: none;
+  }
+
+  .rules strong {
+    color: var(--color-text);
+  }
+
+  .agents {
+    margin-top: 1rem;
+  }
+
+  /* Architecture */
+  .architecture {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .layers {
+    display: flex;
+    flex: 999 1 560px;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 0;
+    font-size: 0.875rem;
+  }
+
+  .layer-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .layer {
+    padding: 0.85rem;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    background: var(--color-surface);
+  }
+
+  .layer-row .layer strong,
+  .layer-row .layer span {
+    display: block;
+  }
+
+  .layer span {
+    color: var(--color-muted);
+  }
+
+  .layer-shared {
+    border-color: var(--color-surface-2);
+    background: var(--color-surface-2);
+    text-align: center;
+  }
+
+  .layer-link {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-align: center;
+  }
+
+  .layer-entry {
+    border-color: var(--color-accent-soft);
+    background: var(--color-accent-soft);
+  }
+
+  .layer-entry span {
+    color: var(--color-accent-ink);
+  }
+
+  .layer-core {
+    border-color: var(--color-text);
+    background: var(--color-text);
+    color: #ffffff;
+  }
+
+  .layer-core span {
+    color: var(--color-on-ink-muted);
+  }
+
+  .tenancy {
+    flex: 1 1 320px;
+    min-width: 0;
+  }
+
+  .tenancy ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 0;
+    padding-left: 1.15rem;
+    color: var(--color-muted);
+    font-size: 0.94rem;
+  }
+
+  /* Challenges */
+  .challenges {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr));
+  }
+
+  .challenge-number {
+    display: block;
+    margin-bottom: 0.75rem;
+    color: var(--color-accent);
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+
+  .challenges h3 {
+    margin-bottom: 0.65rem;
+  }
+
+  /* Stack */
+  .stack {
+    margin: 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .stack div {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.75rem 1.5rem;
+    padding-block: 1.1rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .stack dt {
+    flex: 0 0 180px;
+    color: var(--color-text);
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .stack dd {
+    flex: 1 1 400px;
+    margin: 0;
+  }
+
+  /* Gallery */
+  .shot {
+    margin: 0;
+  }
+
+  .shot img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+  }
+
+  .shot figcaption {
+    margin-top: 0.5rem;
+    color: var(--color-muted);
+    font-size: 0.875rem;
+  }
+
+  .status {
+    margin: 0;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    background: var(--color-surface);
+    font-size: 0.92rem;
+  }
+
+  .status strong {
+    color: var(--color-text);
   }
 
   @media (max-width: 640px) {
-    .architecture-grid,
-    .decision-list {
-      grid-template-columns: 1fr;
+    .governance {
+      padding: 1.25rem;
+    }
+
+    .flow li {
+      flex-basis: 100%;
+    }
+
+    .flow li + li::before {
+      content: "↓" / "";
     }
   }
 </style>

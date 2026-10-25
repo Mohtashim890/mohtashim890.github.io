@@ -1,0 +1,115 @@
+---
+// Phone frame for member-app screenshots. Without `src` it draws a
+// decorative check-in pass until a real screenshot is added.
+interface Props {
+  src?: string;
+  alt?: string;
+  width?: string;
+  class?: string;
+}
+
+const { src, alt = "", width = "200px", class: className } = Astro.props;
+
+// Deterministic QR-like pattern so the sketch looks the same on every build.
+const size = 11;
+let seed = 7;
+const cells = Array.from({ length: size * size }, (_, i) => {
+  const x = i % size;
+  const y = Math.floor(i / size);
+  const inFinder = (cx: number, cy: number) =>
+    x >= cx && x < cx + 3 && y >= cy && y < cy + 3;
+  if (inFinder(0, 0) || inFinder(size - 3, 0) || inFinder(0, size - 3)) {
+    return true;
+  }
+  seed = (seed * 9301 + 49297) % 233280;
+  return seed / 233280 > 0.55;
+});
+---
+
+<figure class:list={["phone", className]} style={`--phone-width: ${width}`}>
+  {src ? (
+    <img src={src} alt={alt} loading="lazy" />
+  ) : (
+    <div class="pass" aria-hidden="true">
+      <p class="pass-gym">Iron Paradise Gym</p>
+      <div class="qr" style={`--qr-size: ${size}`}>
+        {cells.map((on) => <span class:list={{ on }}></span>)}
+      </div>
+      <p class="pass-name">Member pass</p>
+      <p class="pass-timer">New code in 30 s</p>
+    </div>
+  )}
+</figure>
+
+<style>
+  .phone {
+    width: var(--phone-width);
+    margin: 0;
+    overflow: hidden;
+    aspect-ratio: 1 / 2;
+    border: 7px solid var(--color-text);
+    border-radius: 30px;
+    background: var(--color-surface);
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .pass {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 100%;
+    padding: 14px;
+    text-align: center;
+  }
+
+  .pass p {
+    margin: 0;
+  }
+
+  .pass-gym {
+    color: var(--color-text);
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .qr {
+    display: grid;
+    grid-template-columns: repeat(var(--qr-size), 1fr);
+    gap: 2px;
+    width: 78%;
+    padding: 8px;
+    border-radius: 8px;
+    background: var(--color-surface-2);
+  }
+
+  .qr span {
+    aspect-ratio: 1;
+    border-radius: 1px;
+  }
+
+  .qr .on {
+    background: var(--color-text);
+  }
+
+  .pass-name {
+    font-size: 0.72rem;
+    font-weight: 600;
+  }
+
+  .pass-timer {
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--color-accent-soft);
+    color: var(--color-accent-ink);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+  }
+</style>

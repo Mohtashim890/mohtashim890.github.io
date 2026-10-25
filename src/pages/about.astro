@@ -1,139 +1,167 @@
-
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import CtaBand from "../components/CtaBand.astro";
+import { site } from "../data/site";
+import { ironforge } from "../data/ironforge";
+
+const interests = [
+  "Reliable, maintainable .NET application architecture",
+  "Agentic systems and tool-based integrations",
+  "API design, authorization and integration boundaries",
+  "Cross-platform application development",
+  "Cloud deployment, testing and operational reliability",
+  "Practical applications of data science and machine learning",
+];
 ---
 
 <BaseLayout
   title="About | Mohtashim Ul Haq"
   description="Professional background, software engineering interests, and postgraduate study in Data Science at Universiti Sains Malaysia."
 >
-  <article class="container section about-page">
-    <header class="page-intro">
-      <p class="eyebrow">About</p>
-      <h1>Software engineering with a systems perspective.</h1>
-      <p class="lead">
-        I work on software development across application architecture,
-        APIs, integrations, and deployment. My current project,
-        IronForge, brings these disciplines together in an agentic
-        SaaS engineering environment.
-      </p>
-    </header>
-
-    <section class="about-section">
-      <h2>Professional focus</h2>
-      <p>
-        My engineering interests include maintainable .NET applications,
-        distributed application boundaries, AI-enabled workflows,
-        tool integrations, and reliable software delivery.
-      </p>
-      <p>
-        I value practical implementation: defining component
-        responsibilities, documenting trade-offs, validating behavior,
-        and making software reproducible to build and deploy.
-      </p>
-    </section>
-
-    <section class="about-section">
-      <h2>Education</h2>
-      <article class="card education-card">
-        <p class="eyebrow">Postgraduate study · In progress</p>
-        <h3>Master's in Data Science</h3>
-        <p class="institution">Universiti Sains Malaysia (USM)</p>
-        <p>
-          My postgraduate study complements my software engineering
-          work by developing my understanding of data-driven methods
-          and their application in software systems.
+  <section class="page-hero">
+    <div class="container page-hero-inner about-hero">
+      <div class="about-hero-copy">
+        <p class="eyebrow">About</p>
+        <h1>Software engineering with a <span class="accent">systems perspective.</span></h1>
+        <p class="lead">
+          I work across application architecture, APIs, integrations and
+          deployment. My current project, IronForge, brings these disciplines
+          together in a production-grade, agentic SaaS platform.
         </p>
-        <p class="small-note">
-          Academic research topics and completed coursework will be
-          added as they are confirmed and can be documented accurately.
-        </p>
-      </article>
-    </section>
+      </div>
+      <img
+        class="about-photo"
+        src={site.photo}
+        alt="Portrait of Mohtashim Ul Haq"
+        width="320"
+        height="400"
+      />
+    </div>
+  </section>
 
-    <section class="about-section">
-      <h2>Current engineering project</h2>
-      <h3>IronForge</h3>
-      <p>
-        IronForge is my flagship project for exploring end-to-end
-        software engineering across Blazor, ASP.NET Core APIs, MCP
-        integration, internal agent workflows, MAUI Blazor Hybrid,
-        PostgreSQL, Docker, and cloud deployment.
-      </p>
-      <a href="/projects/ironforge/">Explore the IronForge case study →</a>
-    </section>
+  <section class="section">
+    <div class="container about-layout">
+      <div class="about-main">
+        <section>
+          <h2>Professional focus</h2>
+          <p>
+            My engineering interests include maintainable .NET applications,
+            distributed application boundaries, AI-enabled workflows, tool
+            integrations and reliable software delivery.
+          </p>
+          <p>
+            I value practical implementation: defining component
+            responsibilities, documenting trade-offs, validating behaviour,
+            and making software reproducible to build and deploy.
+          </p>
+        </section>
 
-    <section class="about-section">
-      <h2>Areas of interest</h2>
-      <ul>
-        <li>Reliable, maintainable .NET application architecture.</li>
-        <li>Agentic systems and tool-based integrations.</li>
-        <li>API design, authorization, and integration boundaries.</li>
-        <li>Cross-platform application development.</li>
-        <li>Cloud deployment, testing, and operational reliability.</li>
-        <li>Practical applications of data science and machine learning.</li>
-      </ul>
-    </section>
+        <section>
+          <h2>Areas of interest</h2>
+          <ul class="check-list">
+            {interests.map((interest) => <li>{interest}</li>)}
+          </ul>
+        </section>
+      </div>
 
-    <section class="about-section">
-      <h2>Résumé</h2>
-      <p>
-        For a concise overview of my professional experience,
-        technical skills, and education, see my résumé.
-      </p>
-      <a class="button button-primary" href="/documents/Mohtashim_Ul_Haq.pdf" download>
-        Download résumé (PDF)
-      </a>
-      <p class="small-note">
-        The PDF must be added to the public/documents directory before
-        this download link is published.
-      </p>
-    </section>
+      <aside class="about-side" aria-label="Highlights">
+        <div class="card">
+          <span class="card-label">Education · in progress</span>
+          <h3>Master's in Data Science</h3>
+          <p class="institution">Universiti Sains Malaysia (USM)</p>
+          <p>
+            Postgraduate study that complements my engineering work with
+            data-driven methods and their use in software systems.
+          </p>
+        </div>
 
-    <section class="about-section">
-      <h2>Get in touch</h2>
-      <p>
-        For software engineering opportunities or project enquiries,
-        use the contact page.
-      </p>
-      <a class="button" href="/contact/">Contact me</a>
-    </section>
-  </article>
+        <a class="card" href={ironforge.href}>
+          <span class="card-label">Current project</span>
+          <h3>{ironforge.name}</h3>
+          <p>{ironforge.tagline}, built solo on .NET 10.</p>
+          <span class="text-link">Read the case study →</span>
+        </a>
+
+        <div class="card">
+          <span class="card-label">Résumé</span>
+          <p>Experience, technical skills and education on one page.</p>
+          <a class="button button-dark button-small" href={site.resumeUrl} download>
+            Download résumé (PDF)
+          </a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <CtaBand title="Let's work together" text="Open to full-time roles and freelance projects.">
+    <a class="button button-dark" href="/contact/">Get in touch</a>
+    <a class="button" href="/services/">See services</a>
+  </CtaBand>
 </BaseLayout>
 
 <style>
-  .about-page {
-    max-width: 850px;
+  .about-hero {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 3rem;
   }
 
-  .page-intro {
-    padding-block: 3rem;
+  .about-hero-copy {
+    flex: 1 1 560px;
+    min-width: 0;
   }
 
-  .lead {
-    max-width: 740px;
-    font-size: 1.15rem;
+  .about-photo {
+    flex: 0 1 280px;
+    width: 280px;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    padding: 8px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
   }
 
-  .about-section {
-    padding-block: 2rem;
-    border-top: 1px solid var(--color-border);
+  .about-layout {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 3rem;
   }
 
-  .education-card {
-    margin-top: 1.25rem;
+  .about-main {
+    display: flex;
+    flex: 999 1 520px;
+    flex-direction: column;
+    gap: 3rem;
+    min-width: 0;
   }
 
-  .education-card h3 {
-    margin-bottom: 0.4rem;
+  .about-main h2 {
+    margin-bottom: 1.1rem;
+    font-size: 1.85rem;
+  }
+
+  .about-side {
+    display: flex;
+    flex: 1 1 320px;
+    flex-direction: column;
+    gap: 0.9rem;
+    min-width: 0;
+  }
+
+  .about-side h3 {
+    margin-bottom: 0.35rem;
+  }
+
+  .about-side p {
+    margin-bottom: 0.9rem;
+    font-size: 0.94rem;
   }
 
   .institution {
     color: var(--color-text);
     font-weight: 600;
-  }
-
-  .small-note {
-    font-size: 0.85rem;
   }
 </style>

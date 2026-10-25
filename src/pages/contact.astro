@@ -1,123 +1,75 @@
-
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../data/site";
 
-const contactEmail = "mohtashimulhaq34@gmail.com";
-const linkedInUrl = "https://www.linkedin.com/in/mohtashim-ul-haq";
-const githubUrl = "https://github.com/mohtashim890";
-
-const emailConfigured = !contactEmail.startsWith("REPLACE_");
-const linkedInConfigured = linkedInUrl.startsWith("https://");
+const channels = [
+  {
+    label: "Email",
+    title: "Send an email",
+    detail: site.email,
+    href: `mailto:${site.email}`,
+    external: false,
+  },
+  {
+    label: "Professional network",
+    title: "Connect on LinkedIn",
+    detail: "View my professional profile.",
+    href: site.linkedInUrl,
+    external: true,
+  },
+  {
+    label: "Source code",
+    title: "GitHub",
+    detail: "Explore my repositories, including IronForge.",
+    href: site.githubUrl,
+    external: true,
+  },
+];
 ---
 
 <BaseLayout
   title="Contact | Mohtashim Ul Haq"
-  description="Contact Mohtashim Ul Haq about .NET engineering opportunities, SaaS development, AI integration, and software projects."
+  description="Contact Mohtashim Ul Haq about .NET engineering roles, SaaS development, AI agent integration and software projects."
 >
-  <section class="container section contact-page">
-    <p class="eyebrow">Contact</p>
-    <h1>Let's discuss a software engineering problem.</h1>
-
-    <p class="lead">
-      For engineering opportunities, project enquiries, or technical
-      collaboration, you can reach me through the professional channels
-      below.
-    </p>
-
-    <div class="contact-options">
-      {emailConfigured && (
-        <a class="card contact-card" href={`mailto:${contactEmail}`}>
-          <span class="contact-label">Email</span>
-          <h2>Send an email</h2>
-          <p>{contactEmail}</p>
-        </a>
-      )}
-
-      {linkedInConfigured && (
-        <a
-          class="card contact-card"
-          href={linkedInUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <span class="contact-label">Professional network</span>
-          <h2>Connect on LinkedIn</h2>
-          <p>View my professional profile.</p>
-        </a>
-      )}
-
-      <a
-        class="card contact-card"
-        href={githubUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <span class="contact-label">Source code</span>
-        <h2>GitHub</h2>
-        <p>Explore my repositories and engineering work.</p>
-      </a>
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <p class="eyebrow">Contact</p>
+      <h1>Have a role or a project <span class="accent">in mind?</span></h1>
+      <p class="lead">
+        For engineering roles, project enquiries or technical collaboration,
+        reach me through any of the channels below. I usually reply within a
+        day.
+      </p>
     </div>
+  </section>
 
-    <p class="small-note">
-      Please replace the email and LinkedIn placeholders before publishing.
-      This static page does not send or store contact form submissions.
-    </p>
+  <section class="section">
+    <div class="container">
+      <div class="grid-auto">
+        {channels.map((channel) => (
+          <a
+            class="card contact-card"
+            href={channel.href}
+            target={channel.external ? "_blank" : undefined}
+            rel={channel.external ? "noopener noreferrer" : undefined}
+          >
+            <span class="card-label">{channel.label}</span>
+            <h2>{channel.title}</h2>
+            <p>{channel.detail}</p>
+          </a>
+        ))}
+      </div>
+    </div>
   </section>
 </BaseLayout>
 
 <style>
-  .contact-page {
-    max-width: 900px;
-  }
-
-  .contact-page > .eyebrow {
-    margin-top: 2rem;
-  }
-
-  .lead {
-    max-width: 700px;
-    font-size: 1.15rem;
-  }
-
-  .contact-options {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
-    margin-block: 2.5rem;
-  }
-
-  .contact-card {
-    display: block;
-    color: var(--color-text);
-    text-decoration: none;
-  }
-
-  .contact-card:hover {
-    border-color: var(--color-accent);
-  }
-
-  .contact-label {
-    color: var(--color-accent);
-    font-size: 0.8rem;
-  }
-
   .contact-card h2 {
-    margin-top: 1rem;
+    margin: 0.75rem 0 0.4rem;
     font-size: 1.35rem;
   }
 
   .contact-card p {
-    margin-bottom: 0;
     overflow-wrap: anywhere;
-  }
-
-  .small-note {
-    font-size: 0.85rem;
-  }
-
-  @media (max-width: 600px) {
-    .contact-options {
-      grid-template-columns: 1fr;
-    }
   }
 </style>

@@ -1,0 +1,30 @@
+---
+interface Props {
+  variant?: "soft" | "outline";
+}
+
+const { variant = "soft" } = Astro.props;
+---
+
+<li class:list={["tag", variant]}><slot /></li>
+
+<style>
+  .tag {
+    padding: 0.3rem 0.7rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .soft {
+    background: var(--color-accent-soft);
+    color: var(--color-accent-ink);
+  }
+
+  .outline {
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text);
+  }
+</style>

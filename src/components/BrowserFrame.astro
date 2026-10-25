@@ -1,0 +1,180 @@
+---
+// Browser window for product screenshots. Without `src` it draws a
+// decorative dashboard sketch until a real screenshot is added.
+interface Props {
+  url: string;
+  src?: string;
+  alt?: string;
+  height?: string;
+  class?: string;
+}
+
+const { url, src, alt = "", height = "300px", class: className } = Astro.props;
+const bars = [42, 64, 50, 78, 58, 88, 70, 96, 74, 84];
+---
+
+<figure class:list={["browser", className]}>
+  <div class="chrome" aria-hidden="true">
+    <span></span><span></span><span></span>
+    <p>{url}</p>
+  </div>
+
+  {src ? (
+    <img src={src} alt={alt} loading="lazy" />
+  ) : (
+    <div class="sketch" style={`--sketch-height: ${height}`} aria-hidden="true">
+      <div class="side">
+        <i class="logo"></i>
+        <i></i><i></i><i></i><i></i><i></i>
+      </div>
+      <div class="main">
+        <div class="tiles">
+          <div><i class="label"></i><b>128</b></div>
+          <div><i class="label"></i><b>PKR 412k</b></div>
+          <div><i class="label"></i><b>9</b></div>
+        </div>
+        <div class="chart">
+          {bars.map((h) => <span style={`height: ${h}%`}></span>)}
+        </div>
+        <div class="rows"><i></i><i></i><i></i></div>
+      </div>
+    </div>
+  )}
+</figure>
+
+<style>
+  .browser {
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    background: var(--color-surface-2);
+  }
+
+  .chrome {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .chrome span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-border);
+  }
+
+  .chrome p {
+    margin: 0 0 0 12px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+
+  img {
+    width: 100%;
+  }
+
+  .sketch {
+    display: flex;
+    gap: 14px;
+    height: var(--sketch-height);
+    padding: 16px;
+  }
+
+  .sketch i {
+    display: block;
+    height: 8px;
+    border-radius: 4px;
+    background: var(--color-dot);
+  }
+
+  .side {
+    display: flex;
+    flex: 0 0 18%;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 10px;
+    background: var(--color-surface);
+  }
+
+  .side .logo {
+    width: 60%;
+    height: 12px;
+    margin-bottom: 8px;
+    background: var(--color-text);
+  }
+
+  .main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .tiles div {
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: var(--color-surface);
+  }
+
+  .tiles .label {
+    width: 50%;
+    height: 6px;
+    margin-bottom: 8px;
+  }
+
+  .tiles b {
+    font-family: var(--font-display);
+    font-size: clamp(0.8rem, 1.6vw, 1.15rem);
+    white-space: nowrap;
+  }
+
+  .chart {
+    display: flex;
+    flex: 1;
+    align-items: flex-end;
+    gap: 6%;
+    min-height: 0;
+    padding: 14px 16px 0;
+    border-radius: 10px;
+    background: var(--color-surface);
+  }
+
+  .chart span {
+    flex: 1;
+    border-radius: 4px 4px 0 0;
+    background: var(--color-accent-soft);
+  }
+
+  .chart span:nth-child(8) {
+    background: var(--color-accent);
+  }
+
+  .rows {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    border-radius: 10px;
+    background: var(--color-surface);
+  }
+
+  .rows i:nth-child(2) {
+    width: 80%;
+  }
+
+  .rows i:nth-child(3) {
+    width: 60%;
+  }
+</style>

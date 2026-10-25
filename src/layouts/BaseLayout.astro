@@ -1,6 +1,6 @@
-
 ---
 import "../styles/global.css";
+import { navigation, site } from "../data/site";
 
 interface Props {
   title: string;
@@ -12,6 +12,8 @@ const { title, description, image = "/images/og-default.png" } = Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 const socialImageUrl = new URL(image, Astro.site);
+
+const isCurrent = (href: string) => Astro.url.pathname.startsWith(href);
 ---
 
 <!doctype html>
@@ -19,9 +21,9 @@ const socialImageUrl = new URL(image, Astro.site);
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#101318" />
+    <meta name="theme-color" content="#faf7f2" />
     <meta name="description" content={description} />
-        
+
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -33,26 +35,37 @@ const socialImageUrl = new URL(image, Astro.site);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImageUrl.href} />
 
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="canonical" href={canonicalUrl} />
-    <title>{title}</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap"
+    />
+
+    <title>{title}</title>
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
 
     <header class="site-header">
       <div class="container header-inner">
-        <a class="brand" href="/" aria-label="Mohtashim — home">
-          MOHTASHIM<span>.</span>
+        <a class="brand" href="/" aria-label="Mohtashim Ul Haq, home">
+          mohtashim<span>.</span>
         </a>
 
         <nav aria-label="Main navigation">
-          <a href="/projects/">Projects</a>
-          <a href="/services/">Services</a>
-          <a href="/writing/">Writing</a>
-          <a href="/about/">About</a>
-          <a href="/contact/">Contact</a>
+          {navigation.map((item) => (
+            <a href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>
+              {item.label}
+            </a>
+          ))}
+          <a class="button button-dark button-small" href={site.resumeUrl} download>
+            Résumé
+          </a>
         </nav>
       </div>
     </header>
@@ -63,8 +76,11 @@ const socialImageUrl = new URL(image, Astro.site);
 
     <footer class="site-footer">
       <div class="container footer-inner">
-        <p>Built with care using Astro and TypeScript.</p>
-        <p>© {new Date().getFullYear()} Mohtashim Ul Haq</p>
+        <p>© {new Date().getFullYear()} {site.name}</p>
+        <nav aria-label="Footer navigation">
+          {navigation.map((item) => <a href={item.href}>{item.label}</a>)}
+          <a href={site.resumeUrl} download>Résumé (PDF)</a>
+        </nav>
       </div>
     </footer>
   </body>
@@ -72,25 +88,34 @@ const socialImageUrl = new URL(image, Astro.site);
 
 <style>
   .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
     border-bottom: 1px solid var(--color-border);
+    background: rgb(255 255 255 / 0.92);
+    backdrop-filter: blur(8px);
   }
 
   .header-inner,
   .footer-inner {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 1.5rem;
+    gap: 0.75rem 1.5rem;
   }
 
   .header-inner {
-    min-height: 76px;
+    min-height: 72px;
+    padding-block: 0.6rem;
   }
 
   .brand {
     color: var(--color-text);
-    font-weight: 800;
-    letter-spacing: 0.06em;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
     text-decoration: none;
     white-space: nowrap;
   }
@@ -99,56 +124,75 @@ const socialImageUrl = new URL(image, Astro.site);
     color: var(--color-accent);
   }
 
-  nav {
+  .header-inner nav {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.25rem;
+    align-items: center;
+    gap: 0.25rem 1.5rem;
   }
 
-  nav a {
+  .header-inner nav a:not(.button) {
     color: var(--color-muted);
-    font-size: 0.9rem;
+    font-size: 0.94rem;
+    font-weight: 500;
     text-decoration: none;
   }
 
-  nav a:hover {
+  .header-inner nav a:not(.button):hover,
+  .header-inner nav a[aria-current="page"] {
     color: var(--color-text);
+  }
+
+  .header-inner nav a[aria-current="page"] {
+    text-decoration: underline;
+    text-decoration-color: var(--color-accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 8px;
   }
 
   .site-footer {
     border-top: 1px solid var(--color-border);
-    padding-block: 1.5rem;
+    background: var(--color-surface);
+    padding-block: 1.75rem;
   }
 
   .footer-inner p {
     margin: 0;
-    font-size: 0.85rem;
+    font-size: 0.875rem;
+  }
+
+  .footer-inner nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+  }
+
+  .footer-inner nav a {
+    color: var(--color-muted);
+    font-size: 0.875rem;
   }
 
   .skip-link {
     position: absolute;
     top: -100px;
     left: 1rem;
-    z-index: 10;
+    z-index: 30;
     padding: 0.75rem 1rem;
     background: var(--color-accent);
-    color: #101318;
+    color: #ffffff;
   }
 
   .skip-link:focus {
     top: 1rem;
   }
 
-  @media (max-width: 720px) {
-    .header-inner,
-    .footer-inner {
-      align-items: flex-start;
-      flex-direction: column;
-      padding-block: 1rem;
+  @media (max-width: 640px) {
+    .site-header {
+      position: static;
     }
 
-    nav {
-      gap: 0.75rem 1rem;
+    .header-inner nav {
+      gap: 0.25rem 1rem;
     }
   }
 </style>

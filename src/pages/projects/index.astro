@@ -1,109 +1,52 @@
-
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import { ironforge } from "../../data/ironforge";
 
 const projects = [
   {
-    title: "IronForge",
-    category: "Flagship project",
-    description:
-      "An agentic SaaS engineering project spanning .NET, Blazor, APIs, MCP integration, MAUI Blazor Hybrid, and cloud deployment.",
-    technologies: [
-      ".NET",
-      "Blazor",
-      "ASP.NET Core",
-      "MCP",
-      "PostgreSQL",
-      "Docker",
-    ],
-    href: "/projects/ironforge/",
-    status: "Active engineering project",
+    title: ironforge.name,
+    tagline: ironforge.tagline,
+    description: ironforge.summary,
+    status: "Flagship project · 2026",
+    technologies: [".NET 10", "Blazor", ".NET MAUI", "PostgreSQL", "MCP", "Stripe Connect", "Docker"],
+    href: ironforge.href,
+    previewUrl: "mohtashim.dev",
   },
 ];
 ---
 
 <BaseLayout
-  title="Projects | Mohtashim Ul Haq"
-  description="Selected software engineering projects, with technical case studies and verifiable implementation evidence."
+  title="Work | Mohtashim Ul Haq"
+  description="Selected software engineering work, with technical case studies covering architecture, implementation and deployment."
 >
-  <section class="container section projects-page">
-    <header class="page-intro">
+  <section class="page-hero">
+    <div class="container page-hero-inner">
       <p class="eyebrow">Selected work</p>
-      <h1>Projects built around practical engineering.</h1>
+      <h1>Products built for <span class="accent">production.</span></h1>
       <p class="lead">
-        Each case study explains the problem, implementation,
-        architecture, and evidence behind the project.
+        Each case study covers the problem, the architecture, the hard parts
+        and how it ships.
       </p>
-    </header>
-
-    <div class="project-list">
-      {projects.map((project) => (
-        <article class="card project-card">
-          <div class="project-meta">
-            <span>{project.category}</span>
-            <span>{project.status}</span>
-          </div>
-
-          <h2>{project.title}</h2>
-          <p>{project.description}</p>
-
-          <div class="technologies">
-            {project.technologies.map((technology) => (
-              <span>{technology}</span>
-            ))}
-          </div>
-
-          <a href={project.href}>Read case study →</a>
-        </article>
-      ))}
     </div>
   </section>
+
+  <section class="section">
+    <div class="container project-list">
+      {projects.map((project) => <ProjectCard {...project} />)}
+    </div>
+  </section>
+
+  <CtaBand title="Want something like this built?" text="Tell me about the product you have in mind.">
+    <a class="button button-dark" href="/contact/">Get in touch</a>
+    <a class="button" href="/services/">See services</a>
+  </CtaBand>
 </BaseLayout>
 
 <style>
-  .projects-page {
-    max-width: 900px;
-  }
-
-  .page-intro {
-    padding-block: 3rem;
-  }
-
-  .lead {
-    max-width: 720px;
-    font-size: 1.15rem;
-  }
-
   .project-list {
     display: grid;
     gap: 1rem;
-  }
-
-  .project-meta {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 0.75rem;
-    color: var(--color-accent);
-    font-size: 0.8rem;
-  }
-
-  .project-card h2 {
-    margin-top: 1.25rem;
-  }
-
-  .technologies {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-block: 1.5rem;
-  }
-
-  .technologies span {
-    padding: 0.3rem 0.65rem;
-    border: 1px solid var(--color-border);
-    border-radius: 999px;
-    color: var(--color-muted);
-    font-size: 0.8rem;
   }
 </style>

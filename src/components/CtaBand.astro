@@ -1,0 +1,86 @@
+---
+interface Props {
+  title: string;
+  text: string;
+  variant?: "soft" | "dark";
+}
+
+const { title, text, variant = "soft" } = Astro.props;
+---
+
+<section class="section">
+  <div class="container">
+    <div class:list={["cta", variant]}>
+      <div class="cta-copy">
+        <h2>{title}</h2>
+        <p>{text}</p>
+      </div>
+      <div class="actions">
+        <slot />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.75rem;
+    padding: 3.5rem 2.5rem;
+    border-radius: var(--radius);
+  }
+
+  .cta-copy {
+    flex: 1 1 420px;
+    min-width: 0;
+  }
+
+  h2 {
+    margin-bottom: 0.6rem;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+  }
+
+  p {
+    margin: 0;
+    font-size: 1.05rem;
+  }
+
+  .soft {
+    background: var(--color-accent-soft);
+  }
+
+  .soft p {
+    color: var(--color-accent-ink);
+  }
+
+  .dark {
+    background: var(--color-text);
+  }
+
+  .dark h2 {
+    color: #ffffff;
+  }
+
+  .dark p {
+    color: var(--color-on-ink-muted);
+  }
+
+  .dark :global(.button:not(.button-primary)) {
+    border-color: #57534e;
+    background: transparent;
+    color: #ffffff;
+  }
+
+  .dark :global(.button:not(.button-primary):hover) {
+    border-color: #ffffff;
+  }
+
+  @media (max-width: 640px) {
+    .cta {
+      padding: 2.5rem 1.5rem;
+    }
+  }
+</style>

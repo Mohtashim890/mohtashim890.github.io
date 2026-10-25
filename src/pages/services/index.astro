@@ -1,171 +1,279 @@
-
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import { site } from "../../data/site";
+import { ironforge } from "../../data/ironforge";
+
+const fit = [
+  "A .NET product built or rescued",
+  "AI agents with real guardrails",
+  "One app for web and mobile",
+  "Deploys that don't need babysitting",
+];
 
 const services = [
   {
-    number: "01",
     title: "Custom .NET and SaaS development",
     description:
-      "Develop business applications, web interfaces, APIs, and maintainable backend services using C#, ASP.NET Core, and Blazor.",
-    deliverables: [
-      "Application and API implementation",
-      "Database integration and migrations",
-      "Authentication and validation integration",
-      "Deployment and handover documentation",
-    ],
+      "Business applications, web interfaces, APIs and backend services with C#, ASP.NET Core and Blazor.",
+    proof: "multi-tenant isolation, Stripe Connect billing",
+    deliverables: ["App and API build", "Database and migrations", "Auth and 2FA", "Handover docs"],
   },
   {
-    number: "02",
     title: "AI and agent integration",
     description:
-      "Integrate model-driven capabilities into existing applications where tool use and agent workflows solve a concrete business problem.",
-    deliverables: [
-      "Agent workflow and tool-boundary design",
-      "API and tool integration",
-      "Input validation and failure handling",
-      "Testing and evaluation plan",
-    ],
+      "Model-driven features where tool use solves a concrete business problem, with permissions and approvals built in.",
+    proof: "3 agents, 24 governed tools, four-eyes approval",
+    deliverables: ["Agent and tool design", "Approval flows", "Token quotas", "Evaluation plan"],
   },
   {
-    number: "03",
     title: "MCP server and client integration",
     description:
-      "Expose application capabilities through Model Context Protocol tools and connect compatible clients to authorized operations.",
-    deliverables: [
-      "MCP server and tool implementation",
-      "Client connectivity and configuration",
-      "Authentication and permission design",
-      "Integration documentation",
-    ],
+      "Expose your application's capabilities to external AI agents through the Model Context Protocol, safely.",
+    proof: "MCP server with delegated credentials",
+    deliverables: ["MCP tools", "Delegated auth", "Client setup", "Integration docs"],
   },
   {
-    number: "04",
-    title: "Cross-platform .NET applications",
+    title: "Cross-platform .NET apps",
     description:
-      "Build or extend Android and Windows applications using .NET MAUI Blazor Hybrid and shared application services.",
-    deliverables: [
-      "Cross-platform UI implementation",
-      "Backend API connectivity",
-      "Platform-specific configuration",
-      "Packaging and release guidance",
-    ],
+      "Android, iOS, Windows and macOS apps with .NET MAUI Blazor Hybrid, sharing UI with your web app.",
+    proof: "member app with offline QR pass and biometrics",
+    deliverables: ["Shared UI", "Native features", "API connectivity", "Store packaging"],
   },
   {
-    number: "05",
     title: "Containerization and CI/CD",
     description:
-      "Improve delivery workflows for .NET applications through containerization, automated builds, and repeatable deployment procedures.",
-    deliverables: [
-      "Docker configuration",
-      "Build and deployment pipelines",
-      "Environment and secret configuration",
-      "Health checks and operational runbooks",
-    ],
+      "Repeatable delivery for .NET apps: containers, pipelines, health checks, backups and rollbacks.",
+    proof: "auto-rollback deploys, daily backups",
+    deliverables: ["Docker setup", "GitHub Actions", "Monitoring", "Runbooks"],
+  },
+];
+
+const steps = [
+  {
+    title: "Discovery call",
+    detail: "We talk through the problem, users and constraints. Free, 30 minutes.",
+  },
+  {
+    title: "Scope and estimate",
+    detail: "A written plan with milestones, trade-offs and a clear price.",
+  },
+  {
+    title: "Build in milestones",
+    detail: "Working software every week or two, with a demo you can click.",
+  },
+  {
+    title: "Deploy and hand over",
+    detail: "CI/CD, monitoring and documentation, so your team can own it.",
   },
 ];
 ---
 
 <BaseLayout
   title="Services | Mohtashim Ul Haq"
-  description="Software engineering services covering .NET SaaS development, agent integration, MCP, cross-platform apps, and deployment automation."
+  description="Software engineering services: .NET SaaS development, AI agent and MCP integration, cross-platform .NET MAUI apps, and containerized CI/CD."
 >
-  <section class="container section services-page">
-    <header class="page-intro">
-      <p class="eyebrow">Services</p>
-      <h1>Engineering for practical software problems.</h1>
-      <p class="lead">
-        I focus on building and integrating software systems using
-        .NET, web technologies, AI tooling, and deployment automation.
-        Engagement scope should be agreed before work begins.
-      </p>
-    </header>
-
-    <div class="service-list">
-      {services.map((service) => (
-        <article class="card service-card">
-          <span class="service-number">{service.number}</span>
-          <div>
-            <h2>{service.title}</h2>
-            <p>{service.description}</p>
-            <h3>Potential deliverables</h3>
-            <ul>
-              {service.deliverables.map((item) => <li>{item}</li>)}
-            </ul>
-          </div>
-        </article>
-      ))}
+  <section class="page-hero">
+    <div class="container page-hero-inner services-hero">
+      <div class="services-hero-copy">
+        <p class="eyebrow">Services</p>
+        <h1>
+          From idea to production on .NET,{" "}
+          <span class="accent">with AI that stays in its lane.</span>
+        </h1>
+        <p class="lead">
+          I help startups and small businesses build SaaS products, add useful
+          AI agents to existing apps, and ship them reliably.
+        </p>
+        <div class="actions">
+          <a class="button button-primary" href={`mailto:${site.email}?subject=Discovery%20call`}>Book a discovery call</a>
+          <a class="button" href={ironforge.href}>See proof: IronForge</a>
+        </div>
+      </div>
+      <div class="card fit">
+        <span class="card-label">Good fit if you need</span>
+        <ul class="check-list">
+          {fit.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
     </div>
-
-    <section class="engagement card">
-      <h2>How an engagement starts</h2>
-      <ol>
-        <li>Clarify the business problem and expected outcome.</li>
-        <li>Agree on scope, constraints, access, and acceptance criteria.</li>
-        <li>Break the work into reviewable implementation milestones.</li>
-        <li>Validate the deliverables and document handover requirements.</li>
-      </ol>
-      <p>
-        Availability, pricing, timelines, and final scope are discussed
-        individually rather than promised in advance.
-      </p>
-      <a class="button button-primary" href="/contact/">Discuss a project</a>
-    </section>
   </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading eyebrow="What I offer" title="What I can build for you" />
+      <ol class="service-list">
+        {services.map((service, index) => (
+          <li class="card service">
+            <span class="service-number">{String(index + 1).padStart(2, "0")}</span>
+            <div class="service-body">
+              <h3>{service.title}</h3>
+              <p>{service.description}</p>
+              <p class="proof"><strong>Proven in IronForge:</strong> {service.proof}</p>
+            </div>
+            <div class="service-deliverables">
+              <span class="card-label">Deliverables</span>
+              <ul class="tag-list">
+                {service.deliverables.map((item) => <li>{item}</li>)}
+              </ul>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading eyebrow="How we'd work" title="Four steps, no surprises" />
+      <ol class="steps">
+        {steps.map((step, index) => (
+          <li>
+            <span class="step-label">Step {index + 1}</span>
+            <strong>{step.title}</strong>
+            <span>{step.detail}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Tell me what you're building"
+    text="A short email with the problem and timeline is enough to start."
+  >
+    <a class="button button-dark" href={`mailto:${site.email}`}>Email me</a>
+    <a class="button" href={site.linkedInUrl} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+  </CtaBand>
 </BaseLayout>
 
 <style>
-  .services-page {
-    max-width: 980px;
+  .services-hero {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 3rem;
   }
 
-  .page-intro {
-    padding-block: 3rem;
+  .services-hero-copy {
+    display: flex;
+    flex: 1 1 600px;
+    flex-direction: column;
+    gap: 1.35rem;
+    min-width: 0;
   }
 
-  .lead {
-    max-width: 760px;
-    font-size: 1.15rem;
+  .services-hero-copy > * {
+    margin: 0;
+  }
+
+  .services-hero h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .fit {
+    flex: 1 1 300px;
+    min-width: 0;
+  }
+
+  .fit .card-label {
+    margin-bottom: 1rem;
   }
 
   .service-list {
-    display: grid;
-    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
-  .service-card {
-    display: grid;
-    grid-template-columns: 3rem minmax(0, 1fr);
-    gap: 1rem;
+  .service {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem 2.5rem;
+    padding: 1.9rem 2rem;
   }
 
   .service-number {
-    color: var(--color-accent);
+    flex: 0 0 48px;
+    color: var(--color-accent-ink);
     font-family: var(--font-mono);
+    font-weight: 500;
   }
 
-  .service-card h2 {
-    margin-bottom: 0.75rem;
+  .service-body {
+    flex: 1 1 380px;
+    min-width: 0;
+  }
+
+  .service-body h3 {
+    margin-bottom: 0.6rem;
     font-size: 1.4rem;
   }
 
-  .service-card h3 {
-    font-size: 1rem;
+  .service-body p {
+    margin-bottom: 0.5rem;
   }
 
-  .service-card li,
-  .engagement li {
-    margin-block: 0.35rem;
+  .proof {
+    color: var(--color-accent-ink);
+    font-size: 0.875rem;
+  }
+
+  .service-deliverables {
+    flex: 1 1 260px;
+    min-width: 0;
+  }
+
+  .service-deliverables .tag-list li {
+    padding: 0.3rem 0.75rem;
+    border-radius: 6px;
+    background: var(--color-surface-2);
+    font-size: 0.84rem;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    gap: 1rem 1.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .steps li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-top: 1.1rem;
+    border-top: 3px solid var(--color-border);
+  }
+
+  .steps li:first-child {
+    border-top-color: var(--color-accent);
+  }
+
+  .step-label {
+    color: var(--color-accent-ink);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
+
+  .steps strong {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+  }
+
+  .steps li > span:last-child {
     color: var(--color-muted);
   }
 
-  .engagement {
-    margin-top: 2rem;
-  }
-
-  @media (max-width: 540px) {
-    .service-card {
-      grid-template-columns: 1fr;
+  @media (max-width: 640px) {
+    .service {
+      padding: 1.35rem;
     }
   }
 </style>

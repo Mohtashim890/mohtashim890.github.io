@@ -1,72 +1,95 @@
-
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import BrowserFrame from "../components/BrowserFrame.astro";
+import CtaBand from "../components/CtaBand.astro";
+import PhoneFrame from "../components/PhoneFrame.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import TechTag from "../components/TechTag.astro";
+import { site } from "../data/site";
+import { ironforge, metrics, tags } from "../data/ironforge";
+
+const capabilities = [
+  {
+    icon: "screen",
+    title: ".NET and SaaS development",
+    description:
+      "Multi-tenant web apps, REST APIs, billing and payments with clean, tested architecture.",
+    proof: "15 projects, EF Core tenant isolation",
+  },
+  {
+    icon: "chip",
+    title: "AI agents and MCP",
+    description:
+      "Tool-using agents that respect permissions, ask for approval and leave an audit trail.",
+    proof: "3 agents, 24 governed tools",
+  },
+  {
+    icon: "phone",
+    title: "Cross-platform apps",
+    description: "One Blazor UI codebase for web and native Android, iOS, Windows and macOS.",
+    proof: ".NET MAUI member app",
+  },
+  {
+    icon: "terminal",
+    title: "Cloud and CI/CD",
+    description:
+      "Docker, GitHub Actions, health checks, backups and rollbacks that run on their own.",
+    proof: "auto-rollback VPS deploys",
+  },
+];
 ---
 
 <BaseLayout
   title="Mohtashim Ul Haq | .NET, Agentic AI & SaaS Engineering"
-  description="Software engineer focused on .NET applications, agentic AI integrations, SaaS architecture, and cloud deployment."
+  description="Software engineer building production-grade .NET SaaS platforms, governed AI agents, cross-platform apps and automated cloud deployments."
 >
-  <section class="hero section">
-    <div class="container">
-      <p class="eyebrow">Software engineering · Agentic AI</p>
-
-      <h1>
-        Building intelligent software products
-        <span>from API to production.</span>
-      </h1>
-
-      <p class="intro">
-        I develop .NET applications, agent-enabled SaaS platforms,
-        API integrations, and cross-platform experiences—with a focus
-        on architecture, reliability, and deployment.
-      </p>
-
-      <div class="actions">
-        <a class="button button-primary" href="/projects/ironforge/">
-          Explore IronForge
-        </a>
-        <a class="button" href="/documents/Mohtashim_Ul_Haq.pdf" download>
-          Download résumé
-        </a>
-        <a class="button" href="/contact/">
-          Get in touch
-        </a>
-      </div>
-
-      <div class="skills" aria-label="Core technologies">
-        <span>C# / .NET</span>
-        <span>Blazor</span>
-        <span>MAUI Hybrid</span>
-        <span>ASP.NET Core APIs</span>
-        <span>MCP</span>
-        <span>Agentic AI</span>
-        <span>Docker / CI/CD</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="section featured">
-    <div class="container">
-      <p class="eyebrow">Featured project</p>
-      <h2>Engineering IronForge</h2>
-
-      <div class="project-card card">
-        <div>
-          <h3>An agentic SaaS platform</h3>
-          <p>
-            IronForge brings together a .NET web application, APIs,
-            MCP server and client integrations, cross-platform
-            application development, and cloud deployment.
-          </p>
-          <a href="/projects/ironforge/">Read the technical case study →</a>
+  <section class="page-hero">
+    <div class="container page-hero-inner hero">
+      <div class="hero-copy">
+        <p class="availability">
+          <span aria-hidden="true"></span>
+          Open to full-time roles and freelance projects
+        </p>
+        <h1>
+          I build production-grade SaaS and{" "}
+          <span class="accent">AI agents that behave.</span>
+        </h1>
+        <p class="lead">
+          Software engineer working in .NET. I design and ship full-stack
+          platforms, from multi-tenant APIs and billing engines to
+          cross-platform apps and permission-checked AI agents.
+        </p>
+        <div class="actions">
+          <a class="button button-primary" href={ironforge.href}>
+            Read the IronForge case study
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+          </a>
+          <a class="button" href="/services/">Hire me for a project</a>
         </div>
+        <p class="stack-line">.NET 10 · Blazor · .NET MAUI · PostgreSQL · OpenAI · MCP · Docker</p>
+      </div>
 
-        <div class="project-status">
-          <span>FLAGSHIP PROJECT</span>
-          <p>End-to-end engineering</p>
-          <p>Cloud deployment</p>
-          <p>Agent and tool integration</p>
+      <div class="hero-visual">
+        <div class="portrait">
+          <img
+            src={site.photo}
+            alt="Portrait of Mohtashim Ul Haq"
+            width="400"
+            height="500"
+          />
+          <div class="float-card float-tests">
+            <strong>~300</strong>
+            <span>automated tests</span>
+          </div>
+          <div class="float-card float-agents">
+            <span class="icon-badge" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"></path><path d="M9 12l2 2 4-4"></path></svg>
+            </span>
+            <span>
+              <strong>3 governed AI agents</strong>
+              <span>with four-eyes approval</span>
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -74,109 +97,395 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
   <section class="section">
     <div class="container">
-      <p class="eyebrow">What I do</p>
-      <h2>Engineering capabilities</h2>
+      <SectionHeading
+        eyebrow="Featured case study"
+        title="One platform, built end to end"
+        link={{ href: "/projects/", label: "All work" }}
+      />
 
-      <div class="capabilities">
-        <article class="card">
-          <h3>.NET application development</h3>
-          <p>Web applications, APIs, business workflows, and maintainable application architecture.</p>
-        </article>
+      <article class="featured">
+        <div class="featured-main">
+          <div class="featured-copy">
+            <div class="project-title">
+              <span class="project-mark" aria-hidden="true">IF</span>
+              <div>
+                <h3>{ironforge.name}</h3>
+                <p>{ironforge.tagline}</p>
+              </div>
+            </div>
+            <p>{ironforge.summary}</p>
+            <ul class="tag-list" aria-label="Technologies">
+              {tags.map((tag) => <TechTag>{tag}</TechTag>)}
+            </ul>
+            <div class="featured-links">
+              <a class="button button-primary button-small" href={ironforge.href}>Read case study</a>
+              <a class="text-link" href={ironforge.liveUrl} target="_blank" rel="noopener noreferrer">Live dashboard ↗</a>
+              <a class="text-link" href={ironforge.sourceUrl} target="_blank" rel="noopener noreferrer">Source on GitHub ↗</a>
+            </div>
+          </div>
 
-        <article class="card">
-          <h3>Agentic AI integration</h3>
-          <p>Tool-enabled workflows, MCP integrations, and practical AI capabilities with clear boundaries.</p>
-        </article>
+          <div class="featured-visual">
+            <BrowserFrame url="mohtashim.dev" height="300px" />
+            <PhoneFrame class="featured-phone" width="140px" />
+          </div>
+        </div>
 
-        <article class="card">
-          <h3>Deployment and delivery</h3>
-          <p>Containerization, automated builds, deployment workflows, and production configuration.</p>
-        </article>
+        <dl class="metrics">
+          {metrics.map((metric) => (
+            <div>
+              <dt>{metric.label}</dt>
+              <dd>{metric.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading
+        eyebrow="What I do"
+        title="Engineering for teams that need it to work in production"
+        link={{ href: "/services/", label: "All services" }}
+      />
+
+      <div class="grid-auto">
+        {capabilities.map((capability) => (
+          <article class="card capability">
+            <span class="icon-badge icon-large" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                {capability.icon === "screen" && <Fragment><rect x="3" y="4" width="18" height="14" rx="2"></rect><path d="M8 21h8M3 9h18"></path></Fragment>}
+                {capability.icon === "chip" && <Fragment><rect x="6" y="6" width="12" height="12" rx="2"></rect><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"></path></Fragment>}
+                {capability.icon === "phone" && <Fragment><rect x="7" y="2" width="10" height="20" rx="2"></rect><path d="M11 18h2"></path></Fragment>}
+                {capability.icon === "terminal" && <path d="M4 17l6-6-6-6M12 19h8"></path>}
+              </svg>
+            </span>
+            <h3>{capability.title}</h3>
+            <p>{capability.description}</p>
+            <p class="proof"><strong>In IronForge:</strong> {capability.proof}</p>
+          </article>
+        ))}
       </div>
     </div>
   </section>
+
+  <section class="section">
+    <div class="container split about">
+      <div>
+        <p class="eyebrow">About</p>
+        <h2>Engineer by trade, data scientist in training.</h2>
+        <p class="lead">
+          I like owning a product from the first schema to the production
+          deploy: drawing clear boundaries, documenting trade-offs, and
+          writing tests before anything ships. Alongside engineering I'm
+          studying for a Master's in Data Science.
+        </p>
+        <a class="text-link" href="/about/">More about me →</a>
+      </div>
+      <div class="about-cards">
+        <div class="card">
+          <span class="card-label">Education · in progress</span>
+          <h3>Master's in Data Science</h3>
+          <p>Universiti Sains Malaysia (USM)</p>
+        </div>
+        <div class="card">
+          <span class="card-label">Currently</span>
+          <h3>Hardening IronForge for its first gyms</h3>
+          <p>Preparing launch in Pakistan and Malaysia</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="Have a role or a project in mind?" text="I usually reply within a day.">
+    <a class="button button-dark" href={`mailto:${site.email}`}>Email me</a>
+    <a class="button" href={site.linkedInUrl} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    <a class="button" href={site.githubUrl} target="_blank" rel="noopener noreferrer">GitHub</a>
+  </CtaBand>
 </BaseLayout>
 
 <style>
   .hero {
-    padding-top: 6rem;
-  }
-
-  h1 span {
-    display: block;
-    color: var(--color-accent);
-  }
-
-  .intro {
-    max-width: 720px;
-    font-size: 1.15rem;
-  }
-
-  .actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
-    margin-block: 2rem;
+    align-items: center;
+    gap: 3.5rem;
   }
 
-  .skills {
+  .hero-copy {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.65rem;
-    margin-top: 3rem;
+    flex: 1 1 560px;
+    flex-direction: column;
+    gap: 1.5rem;
+    min-width: 0;
   }
 
-  .skills span,
-  .project-status span {
-    border: 1px solid var(--color-border);
+  .hero-copy > * {
+    margin: 0;
+  }
+
+  .availability {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 0.5rem;
+    padding: 0.35rem 0.9rem;
     border-radius: 999px;
-    padding: 0.35rem 0.7rem;
+    background: var(--color-accent-soft);
+    color: var(--color-accent-ink);
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .availability span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-accent);
+  }
+
+  .stack-line {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
+
+  .hero-visual {
+    display: flex;
+    flex: 1 1 360px;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  .portrait {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+  }
+
+  .portrait img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .float-card {
+    position: absolute;
+    display: flex;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    background: var(--color-surface);
+    line-height: 1.3;
+  }
+
+  .float-card span span,
+  .float-tests span {
+    display: block;
     color: var(--color-muted);
     font-size: 0.8rem;
   }
 
-  .project-card {
+  .float-tests {
+    bottom: 3.5rem;
+    left: -1.5rem;
+    flex-direction: column;
+  }
+
+  .float-tests strong {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+  }
+
+  .float-agents {
+    top: 2.5rem;
+    right: -1rem;
+    align-items: center;
+    gap: 0.65rem;
+    font-size: 0.875rem;
+  }
+
+  .icon-badge {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: var(--color-accent-soft);
+    color: var(--color-accent-ink);
+  }
+
+  .icon-large {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+  }
+
+  /* Featured project */
+  .featured {
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+  }
+
+  .featured-main {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+    padding: 2.5rem;
+  }
+
+  .featured-copy {
+    display: flex;
+    flex: 1 1 380px;
+    flex-direction: column;
+    gap: 1.1rem;
+    min-width: 0;
+  }
+
+  .featured-copy > * {
+    margin: 0;
+  }
+
+  .project-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .project-title h3 {
+    margin: 0;
+    font-size: 1.6rem;
+  }
+
+  .project-title p {
+    margin: 0;
+    font-size: 0.875rem;
+  }
+
+  .project-mark {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--color-text);
+    color: #ffffff;
+    font-family: var(--font-display);
+    font-weight: 700;
+  }
+
+  .featured-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1.25rem;
+    margin-top: 0.4rem;
+  }
+
+  .featured-visual {
+    position: relative;
+    flex: 1 1 500px;
+    min-width: 0;
+    padding-bottom: 2.25rem;
+  }
+
+  .featured-visual :global(.featured-phone) {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 0;
+  }
+
+  .metrics {
     display: grid;
-    grid-template-columns: minmax(0, 2fr) minmax(200px, 1fr);
-    gap: 2rem;
-    margin-top: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    margin: 0;
+    border-top: 1px solid var(--color-border);
+    background: var(--color-surface-2);
   }
 
-  .project-card p {
-    max-width: 680px;
+  .metrics div {
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 1.35rem 1.75rem;
+    border-right: 1px solid var(--color-border);
   }
 
-  .project-status {
-    border-left: 1px solid var(--color-border);
-    padding-left: 1.5rem;
+  .metrics dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.9rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
   }
 
-  .project-status span {
-    display: inline-block;
-    color: var(--color-accent);
+  .metrics dt {
+    color: var(--color-muted);
+    font-size: 0.875rem;
   }
 
-  .capabilities {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1rem;
-    margin-top: 2rem;
+  /* Capabilities */
+  .capability {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
   }
 
-  @media (max-width: 700px) {
-    .hero {
-      padding-top: 3.5rem;
+  .capability > * {
+    margin: 0;
+  }
+
+  .capability .proof {
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--color-border);
+    font-size: 0.85rem;
+  }
+
+  .proof strong {
+    color: var(--color-text);
+  }
+
+  /* About */
+  .about .lead {
+    margin-block: 1rem;
+  }
+
+  .about-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .about-cards h3 {
+    margin-bottom: 0.25rem;
+  }
+
+  @media (max-width: 640px) {
+    .featured-main {
+      padding: 1.5rem;
     }
 
-    .project-card,
-    .capabilities {
-      grid-template-columns: 1fr;
+    .float-tests {
+      left: -0.5rem;
     }
 
-    .project-status {
-      border-left: 0;
-      border-top: 1px solid var(--color-border);
-      padding: 1.5rem 0 0;
+    .float-agents {
+      right: -0.5rem;
+    }
+
+    .featured-visual :global(.featured-phone) {
+      display: none;
     }
   }
 </style>
