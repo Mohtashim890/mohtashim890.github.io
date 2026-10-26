@@ -5,7 +5,7 @@ export const ironforge = {
   name: "IronForge",
   tagline: "Agentic, multi-tenant gym management SaaS",
   href: "/projects/ironforge/",
-  liveUrl: "https://mohtashim.dev",
+  liveUrl: "https://app.mohtashim.dev",
   platformUrl: "https://platform.mohtashim.dev",
   sourceUrl: "https://github.com/Mohtashim890/IronForge",
   summary:
